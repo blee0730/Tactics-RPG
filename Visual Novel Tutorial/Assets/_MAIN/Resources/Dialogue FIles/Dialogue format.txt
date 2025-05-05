@@ -1,0 +1,25 @@
+Dialogue Line Format
+{n{as cn}{ at x{:y}}{ [l:e{ + l:e}]} "d"} {c(a){, c(a)}}
+
+n=speaker Elen as Girl at 1:0 "dialogue" {commands(args), commands(args)}
+name[]|dialogue|commands
+
+Speaker "Dialogue Goes Here" Command(arguments go here)
+
+CommandName(arguments)
+
+PlaySong(Hi -v 1 -p 0.3)
+(songname volume value pitch value)
+
+can put multiple lines of dialogue in the same "" using "Line1{}Line2{}Line3"
+Inside {} there are 4 ways to do this
+{c} clear, {a} append, {wc n} wait clear, {wa n} wait append (n = wait time)
+c: deletes first line and shows second
+a: adds line2 to line1
+wc: waits duration n then clears
+wa: waits duration n then appends
+
+extra speaker data
+speaker as characterName at 1:1 [0:Angle, 1:Happy]
+characterName is displayed name 1:1 is position on screen [expressions for different art]
+can be mixed order

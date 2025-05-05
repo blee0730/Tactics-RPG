@@ -1,0 +1,105 @@
+{
+    "name": "VisualNovelInput",
+    "maps": [
+        {
+            "name": "General",
+            "id": "ca1d36f5-ccbf-42d1-92aa-6070b5ef4e28",
+            "actions": [
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "4ce8f677-5759-475e-9a49-1d47250251c3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HistoryBack",
+                    "type": "Button",
+                    "id": "538cacd7-e1e5-4e87-837c-8e9e0782ac2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HistoryForward",
+                    "type": "Button",
+                    "id": "6d4cabcb-a3ff-42c0-9735-39a8c4937565",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HistoryLogs",
+                    "type": "Button",
+                    "id": "db4dffad-9114-4f88-a88f-b1968877dc45",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "73644fcc-da89-44a7-9ac0-e4af7e31c9fe",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "32caca46-163e-49b7-b1c5-cba18ebd595b",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78b6df54-ad07-4306-8811-996848af4a41",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryBack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "918c0576-5001-4e9f-a440-c05b431b8e65",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryForward",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20da85ef-e57b-4ff4-bf43-c92cbd373596",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HistoryLogs",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
