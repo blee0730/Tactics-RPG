@@ -5,7 +5,7 @@ updated pathfinding for multiple layer maps paired with updated traversal animat
 updated cutscene state,
 update leveling system,
 Ability design/balancing + stats for characters,
-New union ability system,
+New union ability system
 
 Storytelling,
 Overall Map,
