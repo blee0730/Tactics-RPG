@@ -1,5 +1,5 @@
 Gameplay:
-Camera rotation in Camera Rig Script paired with input controls that shift with the camera vector,
+Camera rotation in Camera Rig Script paired with input controls that shift with the camera vector DONE (added rotations and proper character movement based on camera angle but got rid of LERP camera movement so it is very abrupt camera movement shifts maybe fix),
 Level design,
 updated pathfinding for multiple layer maps paired with updated traversal animations,
 updated cutscene state,
