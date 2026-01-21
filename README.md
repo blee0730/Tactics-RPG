@@ -12,3 +12,4 @@ Check Important Lists doc for descriptions of skills/abilities that line up with
 These are open source codes that I am modifiying to work for my interests. For the tactics RPG code explanation look https://theliquidfire.com/projects/
 for the Visual Novel it is a youtube series/playlist by Stellar Studio.
 Both are very good at teaching how to code in unity which is how I learned.
+The files here are the base files that are unmodified in case something gets really screwed up it is nice to have the base version to look at to reference or to restart.
