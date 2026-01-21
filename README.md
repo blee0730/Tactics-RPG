@@ -5,3 +5,6 @@ uses reincarnation magic to project his conciousness forwards in time hence why 
 In the future the 5 dukes routinely come together to make decisions about resource allotment and war is about to break out due to insufficient and skewed resources.
 5 duchies/races will be Elves (Fyuman), Dwarves (Dyuman), Animal ppl (Byuman), Angel ppl (Tyuman), Demon ppl (Kyuman), with the Hyumans being slaves/fodder also monsters/beasts (Yuuma).
 MC uses his stat seeing abilities to make a team of misfits that were overlooked by their duchies because they didnt fit into the usual mold/stereotypes of the race.
+
+Check Storyboard doc for a more detailed explanation into what my general thoughts are for the direction of the game/story
+Check Important Lists doc for descriptions of skills/abilities that line up with the Jobs List doc in terms of ability order. Jobs list has each ability listed under its job.
