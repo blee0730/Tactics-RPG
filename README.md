@@ -8,3 +8,7 @@ MC uses his stat seeing abilities to make a team of misfits that were overlooked
 
 Check Storyboard doc for a more detailed explanation into what my general thoughts are for the direction of the game/story
 Check Important Lists doc for descriptions of skills/abilities that line up with the Jobs List doc in terms of ability order. Jobs list has each ability listed under its job.
+
+These are open source codes that I am modifiying to work for my interests. For the tactics RPG code explanation look https://theliquidfire.com/projects/
+for the Visual Novel it is a youtube series/playlist by Stellar Studio.
+Both are very good at teaching how to code in unity which is how I learned.
