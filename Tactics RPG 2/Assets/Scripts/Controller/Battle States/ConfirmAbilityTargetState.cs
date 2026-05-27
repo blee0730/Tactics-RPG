@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class ConfirmAbilityTargetState : BattleState
 {
+	Unit attacker;
 	List<Tile> tiles;
 	AbilityArea aa;
 	int index = 0;
@@ -12,6 +13,26 @@ public class ConfirmAbilityTargetState : BattleState
 	{
 		base.Enter ();
 		aa = turn.ability.GetComponent<AbilityArea>();
+		attacker = aa.GetComponentInParent<Unit>();
+		aa.dir = attacker.dir;
+		if(aa.displace == true && aa.direction == true)
+        {
+            switch(attacker.dir)
+            {
+				case Directions.North:
+					aa.dir = Directions.South;
+					break;
+				case Directions.East:
+					aa.dir = Directions.West;
+					break;
+				case Directions.South:
+					aa.dir = Directions.North;
+					break;
+				default: //West
+					aa.dir = Directions.East;
+					break;
+            }
+        }
 		tiles = aa.GetTilesInArea(board, pos);
 		if (tiles == null)
 			tiles = aa.tiles;
@@ -39,6 +60,8 @@ public class ConfirmAbilityTargetState : BattleState
 
 	protected override void OnMove (object sender, InfoEventArgs<Point> e)
 	{
+		if (aa.displace == true && aa.direction == true)
+			ChangeDirection(e.info);
 		if (e.info.y > 0 || e.info.x > 0)
 			SetTarget(index + 1);
 		else
@@ -69,7 +92,7 @@ public class ConfirmAbilityTargetState : BattleState
 				turn.targets.Add(tiles[i]);
 	}
 
-	void SetTarget (int target)
+	void SetTarget(int target)
 	{
 		index = target;
 		if (index < 0)
@@ -80,9 +103,22 @@ public class ConfirmAbilityTargetState : BattleState
 		if (turn.targets.Count > 0)
 		{
 			RefreshSecondaryStatPanel(turn.targets[index].pos);
-			UpdateHitSuccessIndicator ();
+			UpdateHitSuccessIndicator();
 		}
 	}
+	
+	void ChangeDirection(Point p)
+    {
+		Directions dir = p.GetDirection();
+		if (dir == Directions.North && dir != attacker.dir)
+			aa.dir = dir;
+		if (dir == Directions.East && dir != attacker.dir)
+			aa.dir = dir;
+		if (dir == Directions.South && dir != attacker.dir)
+			aa.dir = dir;
+		if (dir == Directions.West && dir != attacker.dir)
+			aa.dir = dir;
+    }
 
 	void UpdateHitSuccessIndicator ()
 	{

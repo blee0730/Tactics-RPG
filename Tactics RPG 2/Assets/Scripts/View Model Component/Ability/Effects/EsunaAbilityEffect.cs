@@ -12,7 +12,7 @@ public class EsunaAbilityEffect : BaseAbilityEffect
 			if (_curableTypes == null)
 			{
 				_curableTypes = new HashSet<Type>();
-				_curableTypes.Add( typeof(PoisonStatusEffect) );
+				_curableTypes.Add( typeof(DoTStatusEffect) );
 				_curableTypes.Add( typeof(BlindStatusEffect) );
 			}
 			return _curableTypes;

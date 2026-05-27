@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PoisonStatusEffect : StatusEffect 
+public class DoTStatusEffect : StatusEffect 
 {
 	Unit owner;
 

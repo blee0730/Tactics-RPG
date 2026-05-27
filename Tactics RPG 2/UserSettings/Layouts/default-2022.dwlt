@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 0
     width: 603.3334
     height: 1307.3334
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 92
+  controlID: 96
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,7 +317,7 @@ MonoBehaviour:
     m_CachedPref: 438.33337
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 23478
+  m_LastInspectedObjectInstanceID: 3026
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -369,7 +369,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Resources/Abilities
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -377,16 +377,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Abilities
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Brian\Documents\GitHub\Tactics-RPG\Tactics RPG 2
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 985e0000
-    m_LastClickedID: 24216
-    m_ExpandedIDs: 00000000905e0000925e0000945e0000965e0000985e00009a5e00009c5e000000ca9a3bffffff7f
+    m_SelectedIDs: 905e0000
+    m_LastClickedID: 24208
+    m_ExpandedIDs: 00000000905e0000925e0000945e0000965e0000985e00009a5e00009c5e0000b6600000dc60000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 985e0000
+      m_SelectedIDs: 58600000
       m_LastClickedID: 0
       m_ExpandedIDs: 30fbffff
       m_RenameOverlay:
@@ -1012,7 +1012,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: -0.47571594, y: -0.017517976, z: 0.00944971, w: -0.8795306}
     speed: 2
-    m_Value: {x: -0.47571597, y: -0.017517978, z: 0.009449711, w: -0.8795306}
+    m_Value: {x: -0.47565034, y: -0.01751556, z: 0.009448407, w: -0.8794093}
   m_Size:
     m_Target: 9.101782
     speed: 2
