@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SlowStatusEffect : StatusEffect 
+public class DebuffStatusEffect : StatusEffect 
 {
 	Stats myStats;
 

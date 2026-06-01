@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HasteStatusEffect : StatusEffect 
+public class BuffStatusEffect : StatusEffect 
 {
 	Stats myStats;
 

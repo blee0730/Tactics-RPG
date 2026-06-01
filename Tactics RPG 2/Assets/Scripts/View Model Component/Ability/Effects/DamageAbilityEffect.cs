@@ -27,7 +27,14 @@ public class DamageAbilityEffect : BaseAbilityEffect
 
 		// Apply power bonus
 		damage = power * damage / 100;
-		damage = Mathf.Max(damage, 1);
+		Ability ability = GetComponentInParent<Ability>();
+
+	if (ability != null && ability.data != null)
+	{
+    	float masteryBonus = 1f + (ability.data.masteryLevelRequired * 0.05f);
+
+    	damage = Mathf.RoundToInt(damage * masteryBonus);
+	}
 
 		// Tweak the damage based on a variety of other checks like
 		// Elemental damage, Critical Hits, Damage multipliers, etc.

@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Party = System.Collections.Generic.List<UnityEngine.GameObject>;
+using UnityEditor.Search;
+using Unity.VisualScripting;
 
 public static class ExperienceManager
 {
@@ -30,6 +32,16 @@ public static class ExperienceManager
 		}
 
 		// Step 2: weight the amount to award per actor based on their level
+		if(max == min)
+		{
+			int equalShare = Mathf.FloorToInt((float)amount / ranks.Count);
+
+			for(int i = ranks.Count - 1; i >= 0; --i)
+				ranks[i].EXP += equalShare;
+			
+			return;
+		}
+		
 		float[] weights = new float[ranks.Count];
 		float summedWeights = 0;
 		for (int i = ranks.Count - 1; i >= 0; --i)

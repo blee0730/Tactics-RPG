@@ -26,6 +26,7 @@ public class InitBattleState : BattleState
 	{
 		string[] recipes = new string[]
 		{
+			"Rein",
 			"Alaois",
 			"Hania",
 			"Kamau",

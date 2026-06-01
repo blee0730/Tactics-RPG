@@ -4,10 +4,21 @@ using System.Collections.Generic;
 
 public class Ability : MonoBehaviour 
 {
+	public AbilityData data;
+	public List<AbilityEvolution> evolutions = new List<AbilityEvolution>();
 	public const string CanPerformCheck = "Ability.CanPerformCheck";
 	public const string FailedNotification = "Ability.FailedNotification";
 	public const string DidPerformNotification = "Ability.DidPerformNotification";
 
+	public int MasteryLevel
+	{
+    	get
+    	{
+        	AbilityMastery mastery = GetComponent<AbilityMastery>();
+
+        	return mastery != null ? mastery.level : 0;
+    	}
+	}
 	public bool CanPerform ()
 	{
 		BaseException exc = new BaseException(true);
@@ -26,6 +37,15 @@ public class Ability : MonoBehaviour
 		for (int i = 0; i < targets.Count; ++i)
 			Perform(targets[i]);
 
+		AbilityMastery mastery = GetComponent<AbilityMastery>();
+
+		if (mastery != null)
+		{
+    		mastery.RegisterUse();
+		}
+
+		this.PostNotification("AbilityUsed", this);
+
 		this.PostNotification(DidPerformNotification);
 	}
 
@@ -41,13 +61,18 @@ public class Ability : MonoBehaviour
 		return false;
 	}
 
-	void Perform (Tile target)
+	private BaseAbilityEffect[] cachedEffects;
+
+	void Awake()
 	{
-		for (int i = 0; i < transform.childCount; ++i)
-		{
-			Transform child = transform.GetChild(i);
-			BaseAbilityEffect effect = child.GetComponent<BaseAbilityEffect>();
-			effect.Apply(target);
-		}
+    	cachedEffects = GetComponentsInChildren<BaseAbilityEffect>();
+	}
+
+	void Perform(Tile target)
+	{
+    	for (int i = 0; i < cachedEffects.Length; i++)
+    	{
+       		cachedEffects[i].Apply(target);
+    	}
 	}
 }

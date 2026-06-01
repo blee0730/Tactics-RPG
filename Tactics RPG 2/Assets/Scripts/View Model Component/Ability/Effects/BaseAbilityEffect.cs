@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public abstract class BaseAbilityEffect : MonoBehaviour
 {
+	[SerializeField]
+	private EffectType effectType;
+	public EffectType EffectType
+	{
+		get {return effectType; }
+	}
 	#region Consts & Notifications
 	protected const int minDamage = -999;
 	protected const int maxDamage = 999;
