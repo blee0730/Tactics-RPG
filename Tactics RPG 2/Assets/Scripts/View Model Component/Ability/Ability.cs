@@ -23,19 +23,25 @@ public class Ability : MonoBehaviour
 			return;
 		}
 
-		for (int i = 0; i < targets.Count; ++i)
-			Perform(targets[i]);
+		if (targets != null)
+		{
+			for (int i = 0; i < targets.Count; ++i)
+				Perform(targets[i]);
+		}
 
 		this.PostNotification(DidPerformNotification);
 	}
 
 	public bool IsTarget (Tile tile)
 	{
+		if (tile == null)
+			return false;
+
 		Transform obj = transform;
 		for (int i = 0; i < obj.childCount; ++i)
 		{
 			AbilityEffectTarget targeter = obj.GetChild(i).GetComponent<AbilityEffectTarget>();
-			if (targeter.IsTarget(tile))
+			if (targeter != null && targeter.IsTarget(tile))
 				return true;
 		}
 		return false;
@@ -43,11 +49,15 @@ public class Ability : MonoBehaviour
 
 	void Perform (Tile target)
 	{
+		if (target == null)
+			return;
+
 		for (int i = 0; i < transform.childCount; ++i)
 		{
 			Transform child = transform.GetChild(i);
 			BaseAbilityEffect effect = child.GetComponent<BaseAbilityEffect>();
-			effect.Apply(target);
+			if (effect != null)
+				effect.Apply(target);
 		}
 	}
 }

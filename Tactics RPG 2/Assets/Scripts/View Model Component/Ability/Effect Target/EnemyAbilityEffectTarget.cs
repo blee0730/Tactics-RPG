@@ -15,7 +15,10 @@ public class EnemyAbilityEffectTarget : AbilityEffectTarget
 		if (tile == null || tile.content == null)
 			return false;
 
+		if (alliance == null)
+			alliance = GetComponentInParent<Alliance>();
+
 		Alliance other = tile.content.GetComponentInChildren<Alliance>();
-		return alliance.IsMatch(other, Targets.Foe);
+		return alliance != null && alliance.IsMatch(other, Targets.Foe);
 	}
 }

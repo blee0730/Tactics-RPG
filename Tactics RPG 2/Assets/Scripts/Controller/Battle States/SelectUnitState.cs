@@ -18,7 +18,7 @@ public class SelectUnitState : BattleState
 	IEnumerator ChangeCurrentUnit ()
 	{
 		owner.round.MoveNext();
-		SelectTile(turn.actor.tile.pos);
+		SelectTile(turn.actor.tile);
 		RefreshPrimaryStatPanel(pos);
 		yield return null;
 		owner.ChangeState<CommandSelectionState>();

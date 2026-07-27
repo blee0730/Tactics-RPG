@@ -7,7 +7,13 @@ public class FullTypeHitRate : HitRate
 
 	public override int Calculate (Tile target)
 	{
+		if (target == null || target.content == null)
+			return 0;
+
 		Unit defender = target.content.GetComponent<Unit>();
+		if (defender == null)
+			return 0;
+
 		if (AutomaticMiss(defender))
 			return Final(100);
 

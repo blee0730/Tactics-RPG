@@ -1,0 +1,67 @@
+CreateCharacter(Rein -e true -i true)
+Rein.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Rein -x 3.5 -y 0 -i true)
+Rein "Rein dialogue test. This should show Rein's name color, dialogue color, font, and size."
+wait(0.5)
+Rein "Second Rein line. Use this to check spacing, wrapping, and the continue prompt position."
+wait(0.5)
+Rein.Hide(-i true)
+
+wait(0.25)
+
+CreateCharacter(Usagi -e true -i true)
+Usagi.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Usagi -x 3.5 -y 0 -i true)
+Usagi "Usagi dialogue test. This should show Usagi's name color, dialogue color, font, and size."
+wait(0.5)
+Usagi "Second Usagi line. Use this to check if his text feels sneaky, sharp, or readable enough."
+wait(0.5)
+Usagi.Hide(-i true)
+
+wait(0.25)
+
+CreateCharacter(Rosemary -e true -i true)
+Rosemary.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Rosemary -x 3.5 -y 0 -i true)
+Rosemary "Rosemary dialogue test. This should show Rosemary's name color, dialogue color, font, and size."
+wait(0.5)
+Rosemary "Second Rosemary line. Use this to check whether her text feels sturdy and readable."
+wait(0.5)
+Rosemary.Hide(-i true)
+
+wait(0.25)
+
+CreateCharacter(Lazuli -e true -i true)
+Lazuli.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Lazuli -x 3.5 -y 0 -i true)
+Lazuli "Lazuli dialogue test. This should show Lazuli's name color, dialogue color, font, and size."
+wait(0.5)
+Lazuli "Second Lazuli line. Use this to check if the dwarf mage dialogue looks correct."
+wait(0.5)
+Lazuli.Hide(-i true)
+
+wait(0.25)
+
+CreateCharacter(Lucy -e true -i true)
+Lucy.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Lucy -x 3.5 -y 0 -i true)
+Lucy "Lucy dialogue test. This should show Lucy's name color, dialogue color, font, and size."
+wait(0.5)
+Lucy "Second Lucy line. Use this to check if her text feels sharp and readable."
+wait(0.5)
+Lucy.Hide(-i true)
+
+wait(0.25)
+
+CreateCharacter(Holly -e true -i true)
+Holly.SetSprite(-s neutral -l 0 -i true)
+MoveCharacter(Holly -x 3.5 -y 0 -i true)
+Holly "Holly dialogue test. This should show Holly's name color, dialogue color, font, and size."
+wait(0.5)
+Holly "Second Holly line. Use this to check if her text feels quiet, dark, and readable."
+wait(0.5)
+Holly.Hide(-i true)
+
+wait(0.25)
+
+Narrator "Sprite character dialogue test complete."

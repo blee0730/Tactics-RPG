@@ -11,12 +11,28 @@ public class StatPanelController : MonoBehaviour
 	#region Fields
 	[SerializeField] StatPanel primaryPanel;
 	[SerializeField] StatPanel secondaryPanel;
+	[SerializeField] UnitStatusDetailPanelController detailPanel;
+	[SerializeField] CameraRig cameraRigToLockDuringDetail;
 	
 	Tweener primaryTransition;
+	bool detailCameraLockActive;
 	Tweener secondaryTransition;
 	#endregion
 
+	#region Properties
+	public bool IsDetailVisible
+	{
+		get { return detailPanel != null && detailPanel.IsShowing; }
+	}
+	#endregion
+
 	#region MonoBehaviour
+	void Awake ()
+	{
+		EnsureDetailPanel();
+		EnsureCameraRigReference();
+	}
+
 	void Start ()
 	{
 		if (primaryPanel.panel.CurrentPosition == null)
@@ -48,9 +64,78 @@ public class StatPanelController : MonoBehaviour
 	{
 		MovePanel(secondaryPanel, HideKey, ref secondaryTransition);
 	}
+
+	public void ShowDetail (GameObject obj)
+	{
+		EnsureDetailPanel();
+		EnsureCameraRigReference();
+		if (detailPanel != null)
+		{
+			detailPanel.Show(obj);
+			SetDetailCameraLock(true);
+		}
+	}
+
+
+	public void CycleDetailPage ()
+	{
+		EnsureDetailPanel();
+		if (detailPanel != null && detailPanel.IsShowing)
+			detailPanel.CycleSidePage();
+	}
+
+	public void HideDetail ()
+	{
+		if (detailPanel != null)
+			detailPanel.Hide();
+		SetDetailCameraLock(false);
+	}
+
+	void OnDisable ()
+	{
+		SetDetailCameraLock(false);
+	}
 	#endregion
 
 	#region Private
+	void EnsureDetailPanel ()
+	{
+		if (detailPanel != null)
+			return;
+
+		detailPanel = GetComponentInChildren<UnitStatusDetailPanelController>(true);
+		if (detailPanel != null)
+			return;
+
+		GameObject obj = new GameObject("Unit Status Detail Controller");
+		obj.transform.SetParent(transform, false);
+		detailPanel = obj.AddComponent<UnitStatusDetailPanelController>();
+	}
+
+	void EnsureCameraRigReference ()
+	{
+		if (cameraRigToLockDuringDetail != null)
+			return;
+
+		BattleController battle = GetComponentInParent<BattleController>();
+		if (battle != null)
+			cameraRigToLockDuringDetail = battle.cameraRig;
+
+		if (cameraRigToLockDuringDetail == null)
+			cameraRigToLockDuringDetail = FindObjectOfType<CameraRig>();
+	}
+
+	void SetDetailCameraLock (bool locked)
+	{
+		if (detailCameraLockActive == locked)
+			return;
+
+		detailCameraLockActive = locked;
+		EnsureCameraRigReference();
+		if (cameraRigToLockDuringDetail != null)
+			cameraRigToLockDuringDetail.SetMovementLocked(locked);
+	}
+
 	void MovePanel (StatPanel obj, string pos, ref Tweener t)
 	{
 		Panel.Position target = obj.panel[pos];

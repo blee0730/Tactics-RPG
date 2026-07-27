@@ -22,10 +22,21 @@ public abstract class BaseAbilityEffect : MonoBehaviour
 
 	public void Apply (Tile target)
 	{
-		if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
+		if (target == null)
 			return;
 
-		if (GetComponent<HitRate>().RollForHit(target))
+		AbilityEffectTarget targeter = GetComponent<AbilityEffectTarget>();
+		if (targeter == null || targeter.IsTarget(target) == false)
+			return;
+
+		HitRate hitRate = GetComponent<HitRate>();
+		if (hitRate == null)
+		{
+			Debug.LogWarningFormat(this, "Ability effect '{0}' on ability '{1}' has no HitRate component and was skipped.", GetType().Name, GetComponentInParent<Ability>() != null ? GetComponentInParent<Ability>().name : "Unknown");
+			return;
+		}
+
+		if (hitRate.RollForHit(target))
 			this.PostNotification(HitNotification, OnApply(target));
 		else
 			this.PostNotification(MissedNotification);

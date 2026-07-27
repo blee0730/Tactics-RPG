@@ -20,6 +20,7 @@ public static class UnitFactory
 	{
 		GameObject obj = InstantiatePrefab("Units/" + recipe.model);
 		obj.name = recipe.name;
+		AddProfile(obj, recipe);
 		obj.AddComponent<Unit>();
 		AddStats(obj);
 		AddLocomotion(obj, recipe.locomotion);
@@ -29,6 +30,8 @@ public static class UnitFactory
 		AddRank(obj, level);
 		obj.AddComponent<Health>();
 		obj.AddComponent<Mana>();
+		obj.AddComponent<LastDamageMemory>();
+		obj.AddComponent<RewindTimeMemory>();
 		AddAttack(obj, recipe.attack);
 		AddAbilityCatalog(obj, recipe.abilityCatalog);
 		AddAlliance(obj, recipe.alliance);
@@ -40,15 +43,72 @@ public static class UnitFactory
 	#region Private
 	static GameObject InstantiatePrefab (string name)
 	{
+		GameObject prefab = LoadPrefabFlexible(name);
+		return InstantiatePrefabObject(prefab, name);
+	}
+
+	static GameObject LoadPrefabFlexible (string name)
+	{
 		GameObject prefab = Resources.Load<GameObject>(name);
+		if (prefab != null)
+			return prefab;
+
+		int slash = name.LastIndexOf('/');
+		if (slash < 0)
+			return null;
+
+		string folder = name.Substring(0, slash);
+		string leaf = name.Substring(slash + 1);
+		GameObject[] options = Resources.LoadAll<GameObject>(folder);
+		string cleanLeaf = AbilityCatalog.CleanName(leaf);
+		for (int i = 0; i < options.Length; ++i)
+		{
+			if (options[i] == null)
+				continue;
+			if (AbilityCatalog.CleanName(options[i].name) == cleanLeaf)
+				return options[i];
+		}
+
+		return null;
+	}
+
+	static GameObject InstantiatePrefabObject (GameObject prefab, string fallbackName)
+	{
 		if (prefab == null)
 		{
-			Debug.LogError("No Prefab for name: " + name);
-			return new GameObject(name);
+			Debug.LogError("No Prefab for name: " + fallbackName);
+			return new GameObject(fallbackName);
 		}
 		GameObject instance = GameObject.Instantiate(prefab);
 		instance.name = instance.name.Replace("(Clone)", "");
 		return instance;
+	}
+
+	static GameObject InstantiateAbilityPrefab (string categoryName, string abilityEntry)
+	{
+		GameObject prefab = AbilityCatalog.LoadAbilityPrefab(categoryName, abilityEntry);
+		if (prefab == null)
+		{
+			Debug.LogError(string.Format(
+				"No Ability Prefab found for catalog category '{0}' entry '{1}'. " +
+				"Expected Resources/Abilities/{0}/{1}, Resources/Abilities/{1}, or a recursive match under Resources/Abilities.",
+				categoryName, abilityEntry));
+			return null;
+		}
+
+		return InstantiatePrefabObject(prefab, abilityEntry);
+	}
+
+
+	static void AddProfile (GameObject obj, UnitRecipe recipe)
+	{
+		UnitProfile profile = obj.GetComponent<UnitProfile>();
+		if (profile == null)
+			profile = obj.AddComponent<UnitProfile>();
+
+		profile.displayName = !string.IsNullOrEmpty(recipe.displayName) ? recipe.displayName : recipe.name;
+		profile.statusPortrait = recipe.statusPortrait;
+		profile.dialogueCharacterName = !string.IsNullOrEmpty(recipe.dialogueCharacterName) ? recipe.dialogueCharacterName : profile.displayName;
 	}
 
 	static void AddStats (GameObject obj)
@@ -104,7 +164,8 @@ public static class UnitFactory
 	{
 		GameObject main = new GameObject("Ability Catalog");
 		main.transform.SetParent(obj.transform);
-		main.AddComponent<AbilityCatalog>();
+		AbilityCatalog catalog = main.AddComponent<AbilityCatalog>();
+		catalog.recipeName = name;
 
 		AbilityCatalogRecipe recipe = Resources.Load<AbilityCatalogRecipe>("Ability Catalog Recipes/" + name);
 		if (recipe == null)
@@ -113,6 +174,8 @@ public static class UnitFactory
 			return;
 		}
 
+		catalog.ApplyRecipeSettings(recipe);
+
 		for (int i = 0; i < recipe.categories.Length; ++i)
 		{
 			GameObject category = new GameObject( recipe.categories[i].name );
@@ -120,9 +183,12 @@ public static class UnitFactory
 
 			for (int j = 0; j < recipe.categories[i].entries.Length; ++j)
 			{
-				string abilityName = string.Format("Abilities/{0}/{1}", recipe.categories[i].name, recipe.categories[i].entries[j]);
-				GameObject ability = InstantiatePrefab(abilityName);
+				GameObject ability = InstantiateAbilityPrefab(recipe.categories[i].name, recipe.categories[i].entries[j]);
+				if (ability == null)
+					continue;
+
 				ability.transform.SetParent(category.transform);
+				catalog.RegisterAbility(ability.GetComponent<Ability>(), recipe.categories[i].name, recipe.categories[i].entries[j]);
 			}
 		}
 	}

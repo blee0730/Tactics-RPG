@@ -1,0 +1,29 @@
+if ($battle.win)
+    Rein "We did it. I can't believe it."
+else
+    Rein "We failed... but we're still alive."
+end
+
+Rein "Should we press forward or fall back?"
+@choice
+    "Press forward" forward
+    "Fall back" fallback
+@end
+
+@forward
+Rein "Let's go!"
+@goto end
+
+@fallback
+Rein "Strategic retreat. For now."
+
+@end
+
+Narrator "The abandoned fortress loomed ahead."
+show Rein at left
+Rein:neutral "So this is where they've been hiding."
+show Rosemary at right
+Rosemary:concerned "Enemy patrol spotted on the eastern rampart. Stay sharp."
+Rein:determined "Then let's end this quickly."
+hide Rein
+hide Rosemary

@@ -1,10 +1,16 @@
 fileFormatVersion: 2
 guid: 6fdd23b89d856444cb48f97ec32ccd87
-timeCreated: 1431985251
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - dirtPrefab: {fileID: 169248, guid: 38155ffa822c343e0811c469abe4118d, type: 3}
+  - grassPrefab: {fileID: 169248, guid: 7cb87c9b26e7a8d46acbb1d35f3a9c4c, type: 3}
+  - stonePrefab: {fileID: 169248, guid: 9d6bf60f31ca5e543a1ab752375a67a4, type: 3}
+  - woodPrefab: {fileID: 169248, guid: c7280ff2b9400734dad384c0aef0c490, type: 3}
+  - waterPrefab: {fileID: 169248, guid: 7ac95e79302094548bca62eee6bb954a, type: 3}
+  - skyPrefab: {fileID: 169248, guid: 29cc51f2da4cac94886a1e95e1bc9ee8, type: 3}
+  - icePrefab: {fileID: 169248, guid: 74b6a201413e25044a4dcd2d8ebbb580, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

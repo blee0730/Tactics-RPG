@@ -16,16 +16,65 @@ public class StatPanel : MonoBehaviour
 
 	public void Display (GameObject obj)
 	{
-		Alliance alliance = obj.GetComponent<Alliance>();
-		background.sprite = alliance.type == Alliances.Enemy ? enemyBackground : allyBackground;
-		// avatar.sprite = null; Need a component which provides this data
-		nameLabel.text = obj.name;
-		Stats stats = obj.GetComponent<Stats>();
-		if (stats)
+		if (obj == null)
 		{
-			hpLabel.text = string.Format( "HP {0} / {1}", stats[StatTypes.HP], stats[StatTypes.MHP] );
-			mpLabel.text = string.Format( "MP {0} / {1}", stats[StatTypes.MP], stats[StatTypes.MMP] );
-			lvLabel.text = string.Format( "LV. {0}", stats[StatTypes.LVL]);
+			Clear();
+			return;
 		}
+
+		Alliance alliance = obj.GetComponent<Alliance>();
+		if (background != null)
+		{
+			bool isEnemy = alliance != null && alliance.type == Alliances.Enemy;
+			background.sprite = isEnemy ? enemyBackground : allyBackground;
+		}
+
+		UnitProfile profile = obj.GetComponent<UnitProfile>();
+		if (avatar != null)
+		{
+			Sprite portrait = profile != null ? profile.statusPortrait : null;
+			avatar.sprite = portrait;
+			avatar.enabled = portrait != null;
+		}
+
+		if (nameLabel != null)
+			nameLabel.text = profile != null ? profile.DisplayName : obj.name;
+
+		Stats stats = obj.GetComponent<Stats>();
+		if (stats != null)
+		{
+			if (hpLabel != null)
+				hpLabel.text = string.Format( "HP {0} / {1}", stats[StatTypes.HP], stats[StatTypes.MHP] );
+			if (mpLabel != null)
+				mpLabel.text = string.Format( "MP {0} / {1}", stats[StatTypes.MP], stats[StatTypes.MMP] );
+			if (lvLabel != null)
+				lvLabel.text = string.Format( "LV. {0}", stats[StatTypes.LVL]);
+		}
+		else
+		{
+			if (hpLabel != null)
+				hpLabel.text = "HP -- / --";
+			if (mpLabel != null)
+				mpLabel.text = "MP -- / --";
+			if (lvLabel != null)
+				lvLabel.text = "LV. --";
+		}
+	}
+
+	void Clear ()
+	{
+		if (avatar != null)
+		{
+			avatar.sprite = null;
+			avatar.enabled = false;
+		}
+		if (nameLabel != null)
+			nameLabel.text = "";
+		if (hpLabel != null)
+			hpLabel.text = "HP -- / --";
+		if (mpLabel != null)
+			mpLabel.text = "MP -- / --";
+		if (lvLabel != null)
+			lvLabel.text = "LV. --";
 	}
 }

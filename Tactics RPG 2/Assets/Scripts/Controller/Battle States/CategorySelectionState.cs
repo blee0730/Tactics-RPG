@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class CategorySelectionState : BaseAbilityMenuState 
 {
+	AbilityCatalog catalog;
+
 	public override void Enter ()
 	{
 		base.Enter ();
@@ -26,9 +28,16 @@ public class CategorySelectionState : BaseAbilityMenuState
 		menuTitle = "Action";
 		menuOptions.Add("Attack");
 
-		AbilityCatalog catalog = turn.actor.GetComponentInChildren<AbilityCatalog>();
-		for (int i = 0; i < catalog.CategoryCount(); ++i)
-			menuOptions.Add( catalog.GetCategory(i).name );
+		catalog = turn.actor.GetComponentInChildren<AbilityCatalog>();
+		if (catalog != null)
+		{
+			for (int i = 0; i < catalog.VisibleCategoryCount(); ++i)
+			{
+				GameObject category = catalog.GetVisibleCategory(i);
+				if (category != null)
+					menuOptions.Add(category.name);
+			}
+		}
 		
 		abilityMenuPanelController.Show(menuTitle, menuOptions);
 	}
@@ -54,6 +63,9 @@ public class CategorySelectionState : BaseAbilityMenuState
 
 	void SetCategory (int index)
 	{
+		if (catalog == null || catalog.GetVisibleCategory(index) == null)
+			return;
+
 		ActionSelectionState.category = index;
 		owner.ChangeState<ActionSelectionState>();
 	}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31f26483e7d964f4cb7f581476b37186, type: 3}
+  m_Name: Lazuli
+  m_EditorClassIdentifier: 
+  front: {fileID: 2134168232, guid: 15e25feef721d3a44bbd0378962baf9d, type: 3}
+  right: {fileID: -345736119, guid: 15e25feef721d3a44bbd0378962baf9d, type: 3}
+  back: {fileID: 773856113, guid: 15e25feef721d3a44bbd0378962baf9d, type: 3}
+  frontRight: {fileID: 1879718842, guid: 15e25feef721d3a44bbd0378962baf9d, type: 3}
+  backRight: {fileID: 503970462, guid: 15e25feef721d3a44bbd0378962baf9d, type: 3}

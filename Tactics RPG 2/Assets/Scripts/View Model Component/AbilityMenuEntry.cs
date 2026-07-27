@@ -17,8 +17,8 @@ public class AbilityMenuEntry : MonoBehaviour
 	#region Properties
 	public string Title
 	{
-		get { return label.text; }
-		set { label.text = value; }
+		get { return label != null ? label.text : string.Empty; }
+		set { if (label != null) label.text = value; }
 	}
 
 	public bool IsLocked
@@ -58,19 +58,19 @@ public class AbilityMenuEntry : MonoBehaviour
 			{
 				bullet.sprite = disabledSprite;
 				label.color = Color.gray;
-				outline.effectColor = new Color32(20, 36, 44, 255);
+				if (outline != null) outline.effectColor = new Color32(20, 36, 44, 255);
 			}
 			else if (IsSelected)
 			{
 				bullet.sprite = selectedSprite;
 				label.color = new Color32(249, 210, 118, 255);
-				outline.effectColor = new Color32(255, 160, 72, 255);
+				if (outline != null) outline.effectColor = new Color32(255, 160, 72, 255);
 			}
 			else
 			{
 				bullet.sprite = normalSprite;
 				label.color = Color.white;
-				outline.effectColor = new Color32(20, 36, 44, 255);
+				if (outline != null) outline.effectColor = new Color32(20, 36, 44, 255);
 			}
 		}
 	}
@@ -87,11 +87,34 @@ public class AbilityMenuEntry : MonoBehaviour
 	#region MonoBehaviour
 	void Awake ()
 	{
-		outline = label.GetComponent<Outline>();
+		if (label != null)
+			outline = label.GetComponent<Outline>();
 	}
 	#endregion
 
 	#region Public
+	public void ConfigureTextLayout (bool wrap, int fontSize)
+	{
+		if (label == null)
+			return;
+
+		label.horizontalOverflow = wrap ? HorizontalWrapMode.Wrap : HorizontalWrapMode.Overflow;
+		label.verticalOverflow = wrap ? VerticalWrapMode.Truncate : VerticalWrapMode.Overflow;
+		label.alignment = TextAnchor.MiddleLeft;
+
+		if (fontSize > 0)
+			label.fontSize = fontSize;
+
+		RectTransform rect = label.rectTransform;
+		if (rect != null)
+		{
+			rect.anchorMin = new Vector2(0f, 0f);
+			rect.anchorMax = new Vector2(1f, 1f);
+			rect.offsetMin = new Vector2(rect.offsetMin.x, 0f);
+			rect.offsetMax = new Vector2(-4f, 0f);
+		}
+	}
+
 	public void Reset ()
 	{
 		State = States.None;

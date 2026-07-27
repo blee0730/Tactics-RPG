@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -30,8 +30,8 @@ public class CommandSelectionState : BaseAbilityMenuState
 		}
 
 		abilityMenuPanelController.Show(menuTitle, menuOptions);
-		abilityMenuPanelController.SetLocked(0, turn.hasUnitMoved);
-		abilityMenuPanelController.SetLocked(1, turn.hasUnitActed);
+		abilityMenuPanelController.SetLocked(0, !turn.CanMove() || turn.actor.cantMove);
+		abilityMenuPanelController.SetLocked(1, !turn.CanAct() || turn.actor.cantAct);
 	}
 
 	protected override void Confirm ()
@@ -39,10 +39,12 @@ public class CommandSelectionState : BaseAbilityMenuState
 		switch (abilityMenuPanelController.selection)
 		{
 		case 0: // Move
-			owner.ChangeState<MoveTargetState>();
+			if (turn.CanMove() && !turn.actor.cantMove)
+				owner.ChangeState<MoveTargetState>();
 			break;
 		case 1: // Action
-			owner.ChangeState<CategorySelectionState>();
+			if (turn.CanAct() && !turn.actor.cantAct)
+				owner.ChangeState<CategorySelectionState>();
 			break;
 		case 2: // Wait
 			owner.ChangeState<EndFacingState>();
@@ -56,7 +58,7 @@ public class CommandSelectionState : BaseAbilityMenuState
 		{
 			turn.UndoMove();
 			abilityMenuPanelController.SetLocked(0, false);
-			SelectTile(turn.actor.tile.pos);
+			SelectTile(turn.actor.tile);
 		}
 		else
 		{
@@ -74,9 +76,13 @@ public class CommandSelectionState : BaseAbilityMenuState
 
 		yield return new WaitForSeconds (1f);
 
-		if (turn.hasUnitMoved == false && turn.plan.moveLocation != turn.actor.tile.pos)
+		if (turn.CanMove() && !turn.actor.cantMove && turn.plan.moveLocation != turn.actor.tile.pos)
 			owner.ChangeState<MoveTargetState>();
+<<<<<<< Updated upstream
 		else if (turn.hasUnitActed == false && turn.plan.ability != null)
+=======
+		else if (turn.CanAct() && !turn.actor.cantAct && turn.plan.ability != null)
+>>>>>>> Stashed changes
 			owner.ChangeState<AbilityTargetState>();
 		else
 			owner.ChangeState<EndFacingState>();

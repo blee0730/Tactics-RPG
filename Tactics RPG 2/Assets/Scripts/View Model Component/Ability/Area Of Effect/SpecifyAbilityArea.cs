@@ -10,7 +10,12 @@ public class SpecifyAbilityArea : AbilityArea
 
 	public override List<Tile> GetTilesInArea (Board board, Point pos)
 	{
-		tile = board.GetTile(pos);
+		return GetTilesInArea(board, board.GetTile(pos));
+	}
+
+	public override List<Tile> GetTilesInArea (Board board, Tile selectedTile)
+	{
+		tile = selectedTile;
 		return board.Search(tile, ExpandSearch);
 	}
 

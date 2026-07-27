@@ -43,6 +43,9 @@ public abstract class HitRate : MonoBehaviour
 	
 	public virtual bool RollForHit (Tile target)
 	{
+		if (target == null)
+			return false;
+
 		int roll = UnityEngine.Random.Range(0, 101);
 		int chance = Calculate(target);
 		return roll <= chance;
@@ -52,6 +55,9 @@ public abstract class HitRate : MonoBehaviour
 	#region Protected
 	protected virtual bool AutomaticHit (Unit target)
 	{
+		if (target == null)
+			return false;
+
 		MatchException exc = new MatchException(attacker, target);
 		this.PostNotification(AutomaticHitCheckNotification, exc);
 		return exc.toggle;
@@ -59,6 +65,9 @@ public abstract class HitRate : MonoBehaviour
 
 	protected virtual bool AutomaticMiss (Unit target)
 	{
+		if (target == null)
+			return false;
+
 		MatchException exc = new MatchException(attacker, target);
 		this.PostNotification(AutomaticMissCheckNotification, exc);
 		return exc.toggle;
@@ -66,6 +75,9 @@ public abstract class HitRate : MonoBehaviour
 
 	protected virtual int AdjustForStatusEffects (Unit target, int rate)
 	{
+		if (target == null)
+			return rate;
+
 		Info<Unit, Unit, int> args = new Info<Unit, Unit, int>(attacker, target, rate);
 		this.PostNotification(StatusCheckNotification, args);
 		return args.arg2;
@@ -73,7 +85,32 @@ public abstract class HitRate : MonoBehaviour
 
 	protected virtual int Final (int evade)
 	{
+<<<<<<< Updated upstream
 		return 100 - evade;
+=======
+		if (attacker == null || target == null)
+			return 0;
+
+		int Final = Mathf.RoundToInt(60 + (hit + proficiency - evade * AdjustForRelativeFacing(attacker, target)) * 2);
+		Final = Mathf.Clamp(Final, 0, 100);
+		return Final;
+	}
+	
+	protected virtual float AdjustForRelativeFacing (Unit attacker, Unit target)
+	{
+		if (attacker == null || target == null)
+			return 1f;
+
+		switch (attacker.GetFacing(target))
+		{
+		case Facings.Front:
+			return 1f;
+		case Facings.Side:
+			return 2f / 3f;
+		default:
+			return 1f / 2f;
+		}
+>>>>>>> Stashed changes
 	}
 	#endregion
 }

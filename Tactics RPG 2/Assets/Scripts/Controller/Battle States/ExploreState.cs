@@ -20,6 +20,12 @@ public class ExploreState : BattleState
 		SelectTile(e.info + pos);
 		RefreshPrimaryStatPanel(pos);
 	}
+
+	protected override void OnCycleLayer (object sender, InfoEventArgs<int> e)
+	{
+		CycleTileLayer(e.info);
+		RefreshPrimaryStatPanel(pos);
+	}
 	
 	protected override void OnFire (object sender, InfoEventArgs<int> e)
 	{

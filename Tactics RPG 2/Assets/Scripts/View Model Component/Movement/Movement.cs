@@ -10,6 +10,7 @@ public abstract class Movement : MonoBehaviour
 	protected Unit unit;
 	protected Transform jumper;
 	protected Stats stats;
+	protected Board searchBoard;
 	#endregion
 
 	#region MonoBehaviour
@@ -28,8 +29,10 @@ public abstract class Movement : MonoBehaviour
 	#region Public
 	public virtual List<Tile> GetTilesInRange (Board board)
 	{
+		searchBoard = board;
 		List<Tile> retValue = board.Search( unit.tile, ExpandSearch );
 		Filter(retValue);
+		searchBoard = null;
 		return retValue;
 	}
 
@@ -40,6 +43,21 @@ public abstract class Movement : MonoBehaviour
 	protected virtual bool ExpandSearch (Tile from, Tile to)
 	{
 		return (from.distance + 1) <= range;
+	}
+
+	protected virtual bool CanPassThrough(Tile tile)
+	{
+		return tile == null || tile.content == null;
+	}
+
+	protected bool IsDirectSameColumnLayerSwitch (Tile from, Tile to)
+	{
+		return from != null && to != null && from != to && from.pos == to.pos;
+	}
+
+	protected bool IsLayeredPoint (Point p)
+	{
+		return searchBoard != null && searchBoard.GetSelectableTiles(p).Count > 1;
 	}
 
 	protected virtual void Filter (List<Tile> tiles)

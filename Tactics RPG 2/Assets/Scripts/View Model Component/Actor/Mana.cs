@@ -46,7 +46,7 @@ public class Mana : MonoBehaviour
 	void OnMPWillChange (object sender, object args)
 	{
 		ValueChangeException vce = args as ValueChangeException;
-		vce.AddModifier(new ClampValueModifier(int.MaxValue, 0, stats[StatTypes.MHP]));
+		vce.AddModifier(new ClampValueModifier(int.MaxValue, 0, stats[StatTypes.MMP]));
 	}
 	
 	void OnMMPDidChange (object sender, object args)

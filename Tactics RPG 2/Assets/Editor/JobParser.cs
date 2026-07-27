@@ -35,9 +35,11 @@ public static class JobParser
 		string[] elements = line.Split(',');
 		GameObject obj = GetOrCreate(elements[0]);
 		Job job = obj.GetComponent<Job>();
-		for (int i = 1; i < Job.statOrder.Length + 1; ++i)
-			job.baseStats[i-1] = Convert.ToInt32(elements[i]);
+		EnsureStatArrays(job);
+		for (int i = 0; i < Job.statOrder.Length; ++i)
+			job.baseStats[i] = ReadStartingStat(elements, i);
 
+<<<<<<< Updated upstream
 		StatModifierFeature evade = GetFeature (obj, StatTypes.EVD);
 		evade.amount = Convert.ToInt32(elements[8]);
 
@@ -49,6 +51,14 @@ public static class JobParser
 
 		StatModifierFeature jump = GetFeature (obj, StatTypes.JMP);
 		jump.amount = Convert.ToInt32(elements[11]);
+=======
+
+		// In this project, every normal job stat lives in Job.baseStats / Job.growStats.
+		// Older versions of the parser also added StatModifierFeature components for
+		// SKL, FRT, LCK, MOV, and JMP. Those features are redundant with baseStats
+		// and can subtract/double stats during future job changes, so remove them.
+		RemoveGeneratedJobStatModifierFeatures(obj);
+>>>>>>> Stashed changes
 	}
 
 	static void ParseGrowthStats ()
@@ -64,22 +74,141 @@ public static class JobParser
 		string[] elements = line.Split(',');
 		GameObject obj = GetOrCreate(elements[0]);
 		Job job = obj.GetComponent<Job>();
-		for (int i = 1; i < elements.Length; ++i)
-			job.growStats[i-1] = Convert.ToSingle(elements[i]);
-	}
+		EnsureStatArrays(job);
+		int count = Mathf.Min(elements.Length - 1, Job.statOrder.Length);
+		for (int i = 0; i < count; ++i)
+			job.growStats[i] = Convert.ToSingle(elements[i + 1]);
 
-	static StatModifierFeature GetFeature (GameObject obj, StatTypes type)
-	{
-		StatModifierFeature[] smf = obj.GetComponents<StatModifierFeature>();
-		for (int i = 0; i < smf.Length; ++i)
+		int fortitudeIndex = IndexOf(StatTypes.FRT);
+		if (fortitudeIndex >= 0 && elements.Length <= fortitudeIndex + 1)
 		{
-			if (smf[i].type == type)
-				return smf[i];
+			int legacyLuckIndex = IndexOf(StatTypes.LCK);
+			if (legacyLuckIndex >= 0 && elements.Length > legacyLuckIndex + 1)
+				job.growStats[fortitudeIndex] = Convert.ToSingle(elements[legacyLuckIndex + 1]);
 		}
 
-		StatModifierFeature feature = obj.AddComponent<StatModifierFeature>();
-		feature.type = type;
-		return feature;
+	}
+
+
+	static void EnsureStatArrays (Job job)
+	{
+		if (job.baseStats == null || job.baseStats.Length != Job.statOrder.Length)
+		{
+			int[] old = job.baseStats;
+			job.baseStats = new int[Job.statOrder.Length];
+			CopyStatsWithFortitudeFallback(old, job.baseStats);
+		}
+
+		if (job.growStats == null || job.growStats.Length != Job.statOrder.Length)
+		{
+			float[] old = job.growStats;
+			job.growStats = new float[Job.statOrder.Length];
+			CopyStatsWithFortitudeFallback(old, job.growStats);
+		}
+	}
+
+	static void CopyStatsWithFortitudeFallback (int[] oldValues, int[] newValues)
+	{
+		if (oldValues == null)
+			return;
+
+		int count = Mathf.Min(oldValues.Length, newValues.Length);
+		for (int i = 0; i < count; ++i)
+			newValues[i] = oldValues[i];
+
+		int fortitudeIndex = IndexOf(StatTypes.FRT);
+		int luckIndex = IndexOf(StatTypes.LCK);
+		if (fortitudeIndex >= 0 && luckIndex >= 0 && oldValues.Length > luckIndex)
+			newValues[fortitudeIndex] = oldValues[luckIndex];
+	}
+
+	static void CopyStatsWithFortitudeFallback (float[] oldValues, float[] newValues)
+	{
+		if (oldValues == null)
+			return;
+
+		int count = Mathf.Min(oldValues.Length, newValues.Length);
+		for (int i = 0; i < count; ++i)
+			newValues[i] = oldValues[i];
+
+		int fortitudeIndex = IndexOf(StatTypes.FRT);
+		int luckIndex = IndexOf(StatTypes.LCK);
+		if (fortitudeIndex >= 0 && luckIndex >= 0 && oldValues.Length > luckIndex)
+			newValues[fortitudeIndex] = oldValues[luckIndex];
+	}
+
+	static int ReadStartingStat (string[] elements, int index)
+	{
+		if (index < 0)
+			return 0;
+
+		if (elements.Length > index + 1)
+			return Convert.ToInt32(elements[index + 1]);
+
+		if (Job.statOrder[index] == StatTypes.FRT)
+		{
+			int luckIndex = IndexOf(StatTypes.LCK);
+			if (luckIndex >= 0 && elements.Length > luckIndex + 1)
+				return Convert.ToInt32(elements[luckIndex + 1]);
+		}
+
+		return 0;
+	}
+
+	static int IndexOf (StatTypes type)
+	{
+		for (int i = 0; i < Job.statOrder.Length; ++i)
+		{
+			if (Job.statOrder[i] == type)
+				return i;
+		}
+		return -1;
+	}
+
+	[MenuItem("Pre Production/Cleanup Job Stat Modifier Features")]
+	public static void CleanupJobStatModifierFeatures ()
+	{
+		string[] guids = AssetDatabase.FindAssets("t:Prefab", new string[] { "Assets/Resources/Jobs" });
+		for (int i = 0; i < guids.Length; ++i)
+		{
+			string path = AssetDatabase.GUIDToAssetPath(guids[i]);
+			GameObject obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+			if (obj == null)
+				continue;
+
+			RemoveGeneratedJobStatModifierFeatures(obj);
+			EditorUtility.SetDirty(obj);
+		}
+
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+	}
+
+	static void RemoveGeneratedJobStatModifierFeatures (GameObject obj)
+	{
+		StatModifierFeature[] modifiers = obj.GetComponents<StatModifierFeature>();
+		for (int i = modifiers.Length - 1; i >= 0; --i)
+		{
+			if (!IsGeneratedJobStatModifier(modifiers[i].type))
+				continue;
+
+			UnityEngine.Object.DestroyImmediate(modifiers[i], true);
+		}
+	}
+
+	static bool IsGeneratedJobStatModifier (StatTypes type)
+	{
+		switch (type)
+		{
+		case StatTypes.SKL:
+		case StatTypes.FRT:
+		case StatTypes.LCK:
+		case StatTypes.MOV:
+		case StatTypes.JMP:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	static GameObject GetOrCreate (string jobName)

@@ -9,7 +9,7 @@ public class EndFacingState : BattleState
 	{
 		base.Enter ();
 		startDir = turn.actor.dir;
-		SelectTile(turn.actor.tile.pos);
+		SelectTile(turn.actor.tile);
 		owner.facingIndicator.gameObject.SetActive(true);
 		owner.facingIndicator.SetDirection(turn.actor.dir);
 		if (driver.Current == Drivers.Computer)

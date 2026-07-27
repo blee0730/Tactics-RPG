@@ -5,14 +5,25 @@ public class HealAbilityEffect : BaseAbilityEffect
 {
 	public override int Predict (Tile target)
 	{
+		if (target == null || target.content == null)
+			return 0;
+
 		Unit attacker = GetComponentInParent<Unit>();
 		Unit defender = target.content.GetComponent<Unit>();
+		if (attacker == null || defender == null)
+			return 0;
+
 		return GetStat(attacker, defender, GetPowerNotification, 0);
 	}
 
 	protected override int OnApply (Tile target)
 	{
+		if (target == null || target.content == null)
+			return 0;
+
 		Unit defender = target.content.GetComponent<Unit>();
+		if (defender == null)
+			return 0;
 		
 		// Start with the predicted value
 		int value = Predict(target);
@@ -25,7 +36,8 @@ public class HealAbilityEffect : BaseAbilityEffect
 		
 		// Apply the amount to the target
 		Stats s = defender.GetComponent<Stats>();
-		s[StatTypes.HP] += value;
+		if (s != null)
+			s[StatTypes.HP] += value;
 		return value;
 	}
 }

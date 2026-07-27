@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +22,9 @@ public class BoardCreator : MonoBehaviour
 	Dictionary<Vector3, Tile> fillerTiles = new Dictionary<Vector3, Tile>();
 	Dictionary<Point, Tile> topTiles = new Dictionary<Point, Tile>();
 
+	public Point CurrentPosition { get { return pos; } }
+	public int MaxHeight { get { return height; } set { height = Mathf.Max(0, value); } }
+
 	Transform marker
 	{
 		get
@@ -36,34 +41,51 @@ public class BoardCreator : MonoBehaviour
 	#endregion
 
 	#region Public
+	public void Move (Point direction)
+	{
+		SetPosition(pos + direction);
+	}
+
+	public void SetPosition (Point p)
+	{
+		pos = p;
+		UpdateMarker();
+	}
+
+	public void Grow (Tile.TileType tileType)
+	{
+		GrowSingle(pos, tileType);
+		UpdateMarker();
+	}
+
 	public void GrowDirt ()
 	{
-		GrowSingle(pos, Tile.TileType.dirt);
+		Grow(Tile.TileType.dirt);
 	}
 
 	public void GrowGrass ()
 	{
-		GrowSingle(pos, Tile.TileType.grass);
+		Grow(Tile.TileType.grass);
 	}
 
 	public void GrowStone ()
 	{
-		GrowSingle(pos, Tile.TileType.stone);
+		Grow(Tile.TileType.stone);
 	}
 
 	public void GrowWood ()
 	{
-		GrowSingle(pos, Tile.TileType.wood);
+		Grow(Tile.TileType.wood);
 	}
 
 	public void GrowWater ()
 	{
-		GrowSingle(pos, Tile.TileType.water);
+		Grow(Tile.TileType.water);
 	}
 
 	public void GrowSky ()
 	{
-		GrowSingle(pos, Tile.TileType.sky);
+		Grow(Tile.TileType.sky);
 	}
 
 	public void Raise()
@@ -71,16 +93,29 @@ public class BoardCreator : MonoBehaviour
 		if(topTiles.ContainsKey(pos))
 		{
 			Tile t = topTiles[pos];
-			if(fillerTiles.ContainsKey(new Vector3(pos.x, t.height - 0.25f, pos.y)))
-				fillerTiles[new Vector3(pos.x, t.height - 0.25f, pos.y)].splitTop = true;
+			Vector3 fillerKey = new Vector3(pos.x, t.height - 0.25f, pos.y);
+			if(fillerTiles.ContainsKey(fillerKey))
+				fillerTiles[fillerKey].splitTop = true;
 			t.splitTop = true;
 			t.Grow();
 		}
+		UpdateMarker();
 	}
 	
 	public void Shrink ()
 	{
 		ShrinkSingle(pos);
+		UpdateMarker();
+	}
+
+	public bool HasTopTile (Point p)
+	{
+		return topTiles.ContainsKey(p);
+	}
+
+	public Tile GetTopTile (Point p)
+	{
+		return topTiles.ContainsKey(p) ? topTiles[p] : null;
 	}
 
 	public void UpdateMarker ()
@@ -95,10 +130,12 @@ public class BoardCreator : MonoBehaviour
 			DestroyImmediate(transform.GetChild(i).gameObject);
 		topTiles.Clear();
 		fillerTiles.Clear();
+		UpdateMarker();
 	}
 
 	public void Save ()
 	{
+#if UNITY_EDITOR
 		string filePath = Application.dataPath + "/Resources/Levels";
 		if (!Directory.Exists(filePath))
 			CreateSaveDirectory ();
@@ -123,8 +160,13 @@ public class BoardCreator : MonoBehaviour
 			board.splitTops.Add(t.splitTop);
 		}
 
-		string fileName = string.Format("Assets/Resources/Levels/{1}.asset", filePath, name);
-		AssetDatabase.CreateAsset(board, fileName);
+		string fileName = string.Format("Assets/Resources/Levels/{0}.asset", name);
+		AssetDatabase.CreateAsset(board, AssetDatabase.GenerateUniqueAssetPath(fileName));
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
+#else
+		Debug.LogWarning("BoardCreator.Save can only create LevelData assets inside the Unity Editor.");
+#endif
 	}
 
 	public void Load ()
@@ -148,6 +190,7 @@ public class BoardCreator : MonoBehaviour
 			if(levelData.splitTops[i])
 				t.splitTop = true;
 		}
+		UpdateMarker();
 	}
 	#endregion
 
@@ -218,34 +261,43 @@ public class BoardCreator : MonoBehaviour
 		if (!topTiles.ContainsKey(p))
 			return;
 		
-		Tile t = topTiles[p];
+		Tile removedTop = topTiles[p];
 		topTiles.Remove(p);
-		DestroyImmediate(t.gameObject);
+		DestroyImmediate(removedTop.gameObject);
 
-		if(fillerTiles.ContainsKey(new Vector3(p.x, t.height - 0.25f, p.y)))
+		Vector3 directBelowKey = new Vector3(p.x, removedTop.height - 0.25f, p.y);
+		if(fillerTiles.ContainsKey(directBelowKey))
 		{
-			topTiles.Add(p, fillerTiles[new Vector3(p.x, t.height - 0.25f, p.y)]);
-			fillerTiles[new Vector3(p.x, t.height - 0.25f, p.y)].GetComponent<Tile>().topTile = true;
-			fillerTiles.Remove(new Vector3(p.x, t.height - 0.25f, p.y));
+			Tile replacement = fillerTiles[directBelowKey];
+			replacement.topTile = true;
+			topTiles.Add(p, replacement);
+			fillerTiles.Remove(directBelowKey);
+			return;
 		}
 
-		else
+		Tile splitReplacement = null;
+		Vector3 splitReplacementKey = Vector3.zero;
+		foreach(KeyValuePair<Vector3, Tile> pair in fillerTiles)
 		{
-			foreach(Tile tile in fillerTiles.Values)
+			Tile tile = pair.Value;
+			if(tile.pos == p && tile.splitTop)
 			{
-				if(tile.pos == p && tile.splitTop)
-				{
-					tile.topTile = true;
-					tile.splitTop = false;
-					t = tile;
-				}
+				splitReplacement = tile;
+				splitReplacementKey = pair.Key;
+				break;
 			}
+		}
 
-			topTiles.Add(p, t);
-			fillerTiles.Remove(new Vector3(t.pos.x, t.height, t.pos.y));
+		if (splitReplacement != null)
+		{
+			splitReplacement.topTile = true;
+			splitReplacement.splitTop = false;
+			topTiles.Add(p, splitReplacement);
+			fillerTiles.Remove(splitReplacementKey);
 		}
 	}
 
+#if UNITY_EDITOR
 	void CreateSaveDirectory ()
 	{
 		string filePath = Application.dataPath + "/Resources";
@@ -256,5 +308,6 @@ public class BoardCreator : MonoBehaviour
 			AssetDatabase.CreateFolder("Assets/Resources", "Levels");
 		AssetDatabase.Refresh();
 	}
+#endif
 	#endregion
 }

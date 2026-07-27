@@ -1,14 +1,28 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PerformAbilityState : BattleState 
 {
+<<<<<<< Updated upstream
 	public override void Enter ()
 	{
 		base.Enter ();
 		turn.hasUnitActed = true;
 		if (turn.hasUnitMoved)
 			turn.lockMove = true;
+=======
+	public override void Enter()
+	{
+		base.Enter();
+
+		// Consumes the current unit's action budget. The old code only set
+		// hasUnitActed, which left actionsRemaining > 0 and could let a unit
+		// act again after using an ability.
+		turn.ConsumeAction();
+		if (turn.hasUnitMoved)
+			turn.lockMove = true;
+
+>>>>>>> Stashed changes
 		StartCoroutine(Animate());
 	}
 	
@@ -16,8 +30,18 @@ public class PerformAbilityState : BattleState
 	{
 		// TODO play animations, etc
 		yield return null;
+<<<<<<< Updated upstream
 		ApplyAbility();
 		
+=======
+
+		if (turn.ability != null)
+		{
+			turn.ability.Perform(turn.targets);
+			TupleAbilityModifier.ClearActive(turn.ability);
+		}
+
+>>>>>>> Stashed changes
 		if (IsBattleOver())
 			owner.ChangeState<CutSceneState>();
 		else if (!UnitHasControl())
@@ -27,14 +51,27 @@ public class PerformAbilityState : BattleState
 		else
 			owner.ChangeState<CommandSelectionState>();
 	}
+<<<<<<< Updated upstream
 	
 	void ApplyAbility ()
 	{
 		turn.ability.Perform(turn.targets);
 	}
+=======
+>>>>>>> Stashed changes
 	
 	bool UnitHasControl ()
 	{
-		return turn.actor.GetComponentInChildren<KnockOutStatusEffect>() == null;
+		if (turn.actor == null)
+			return false;
+
+		if (turn.actor.GetComponentInChildren<KnockOutStatusEffect>() != null)
+			return false;
+
+		Health health = turn.actor.GetComponent<Health>();
+		if (health != null && health.HP <= health.MinHP)
+			return false;
+
+		return true;
 	}
 }

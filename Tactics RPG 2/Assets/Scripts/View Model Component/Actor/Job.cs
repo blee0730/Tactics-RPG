@@ -10,14 +10,30 @@ public class Job : MonoBehaviour
 		StatTypes.MMP,
 		StatTypes.ATK,
 		StatTypes.DEF,
+<<<<<<< Updated upstream
 		StatTypes.MAT,
 		StatTypes.MDF,
 		StatTypes.SPD
+=======
+		StatTypes.MAG,
+		StatTypes.RES,
+		StatTypes.SPD,
+		StatTypes.SKL,
+		StatTypes.LCK,
+		StatTypes.MOV,
+		StatTypes.JMP,
+		StatTypes.FRT
+>>>>>>> Stashed changes
 	};
 
 	public int[] baseStats = new int[ statOrder.Length ];
 	public float[] growStats = new float[ statOrder.Length ];
 	Stats stats;
+
+	// Older job prefabs were authored before Fortitude existed, and used LCK as
+	// their status-resistance value. When a job asset has not been manually
+	// expanded yet, Fortitude safely inherits that existing value.
+	const int legacyLuckStatusResistanceIndex = 8;
 	#endregion
 
 	#region MonoBehaviour
@@ -53,7 +69,7 @@ public class Job : MonoBehaviour
 		for (int i = 0; i < statOrder.Length; ++i)
 		{
 			StatTypes type = statOrder[i];
-			stats.SetValue(type, baseStats[i], false);
+			stats.SetValue(type, GetBaseStat(i), false);
 		}
 
 		stats.SetValue(StatTypes.HP, stats[StatTypes.MHP], false);
@@ -78,8 +94,9 @@ public class Job : MonoBehaviour
 		for (int i = 0; i < statOrder.Length; ++i)
 		{
 			StatTypes type = statOrder[i];
-			int whole = Mathf.FloorToInt(growStats[i]);
-			float fraction = growStats[i] - whole;
+			float growth = GetGrowthStat(i);
+			int whole = Mathf.FloorToInt(growth);
+			float fraction = growth - whole;
 
 			int value = stats[type];
 			value += whole;
@@ -91,6 +108,38 @@ public class Job : MonoBehaviour
 
 		stats.SetValue(StatTypes.HP, stats[StatTypes.MHP], false);
 		stats.SetValue(StatTypes.MP, stats[StatTypes.MMP], false);
+	}
+
+	int GetBaseStat (int index)
+	{
+		if (baseStats != null && index < baseStats.Length)
+			return baseStats[index];
+
+		return GetLegacyFortitudeBase(index);
+	}
+
+	float GetGrowthStat (int index)
+	{
+		if (growStats != null && index < growStats.Length)
+			return growStats[index];
+
+		return GetLegacyFortitudeGrowth(index);
+	}
+
+	int GetLegacyFortitudeBase (int index)
+	{
+		if (statOrder[index] == StatTypes.FRT && baseStats != null && baseStats.Length > legacyLuckStatusResistanceIndex)
+			return baseStats[legacyLuckStatusResistanceIndex];
+
+		return 0;
+	}
+
+	float GetLegacyFortitudeGrowth (int index)
+	{
+		if (statOrder[index] == StatTypes.FRT && growStats != null && growStats.Length > legacyLuckStatusResistanceIndex)
+			return growStats[legacyLuckStatusResistanceIndex];
+
+		return 0;
 	}
 	#endregion
 }

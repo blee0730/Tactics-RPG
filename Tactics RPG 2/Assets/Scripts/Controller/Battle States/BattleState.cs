@@ -29,6 +29,7 @@ public abstract class BattleState : State
 		{
 			InputController.moveEvent += OnMove;
 			InputController.fireEvent += OnFire;
+			InputController.layerCycleEvent += OnCycleLayer;
 		}
 	}
 	
@@ -36,6 +37,7 @@ public abstract class BattleState : State
 	{
 		InputController.moveEvent -= OnMove;
 		InputController.fireEvent -= OnFire;
+		InputController.layerCycleEvent -= OnCycleLayer;
 	}
 
 	public override void Enter ()
@@ -54,18 +56,117 @@ public abstract class BattleState : State
 		
 	}
 
+	protected virtual void OnCycleLayer (object sender, InfoEventArgs<int> e)
+	{
+		CycleTileLayer(e.info);
+	}
+
 	protected virtual void SelectTile (Point p)
 	{
-		if (pos == p || !board.topTiles.ContainsKey(p))
+		if (pos == p && owner.selectedTile != null)
 			return;
 
-		pos = p;
-		tileSelectionIndicator.localPosition = board.topTiles[p].center;
+		Tile tile = owner.currentTile != null
+			? board.GetClosestSelectableTile(p, owner.currentTile.height)
+			: board.GetTile(p);
+
+		if (tile == null)
+			return;
+
+		SelectTile(tile);
+	}
+
+	protected virtual void SelectTile (Point p, List<Tile> allowedTiles)
+	{
+		if (allowedTiles == null)
+		{
+			SelectTile(p);
+			return;
+		}
+
+		List<Tile> stack = board.GetSelectableTiles(p);
+		if (stack.Count == 0)
+			return;
+
+		float preferredHeight = owner.currentTile != null ? owner.currentTile.height : float.MaxValue;
+		Tile best = null;
+		float bestDifference = float.MaxValue;
+		for (int i = 0; i < stack.Count; ++i)
+		{
+			Tile candidate = stack[i];
+			if (!allowedTiles.Contains(candidate))
+				continue;
+
+			float difference = Mathf.Abs(candidate.height - preferredHeight);
+			if (best == null || difference < bestDifference)
+			{
+				best = candidate;
+				bestDifference = difference;
+			}
+		}
+
+		if (best != null)
+			SelectTile(best);
+	}
+
+	protected virtual void SelectTile (Tile tile)
+	{
+		if (tile == null || owner.selectedTile == tile)
+			return;
+
+		pos = tile.pos;
+		owner.selectedTile = tile;
+
+		Vector3 indicatorPosition = tile.center;
+		float indicatorOffset = owner.tileSelectionIndicatorYOffset;
+		if (Mathf.Approximately(indicatorOffset, 0f))
+			indicatorOffset = 0.08f;
+		indicatorPosition.y += indicatorOffset;
+		tileSelectionIndicator.localPosition = indicatorPosition;
+	}
+
+	protected virtual void CycleTileLayer (int direction)
+	{
+		CycleTileLayer(direction, null);
+	}
+
+	protected virtual void CycleTileLayer (int direction, List<Tile> allowedTiles)
+	{
+		List<Tile> stack = board.GetSelectableTiles(pos);
+		if (stack.Count <= 1)
+			return;
+
+		List<Tile> candidates = new List<Tile>();
+		for (int i = 0; i < stack.Count; ++i)
+		{
+			if (allowedTiles == null || allowedTiles.Contains(stack[i]))
+				candidates.Add(stack[i]);
+		}
+
+		if (candidates.Count <= 1)
+			return;
+
+		int index = candidates.IndexOf(owner.currentTile);
+		if (index < 0)
+			index = candidates.IndexOf(board.GetTile(pos));
+		if (index < 0)
+			index = candidates.Count - 1;
+
+		// With two selectable layers, Shift and Alt both behave as a clean toggle.
+		// With three or more layers, Shift moves forward through the sorted stack
+		// and Alt moves backward.
+		int step = candidates.Count == 2 ? 1 : (direction >= 0 ? 1 : -1);
+		int nextIndex = index + step;
+		while (nextIndex < 0)
+			nextIndex += candidates.Count;
+		nextIndex %= candidates.Count;
+
+		SelectTile(candidates[nextIndex]);
 	}
 
 	protected virtual Unit GetUnit (Point p)
 	{
-		Tile t = board.GetTile(p);
+		Tile t = (p == pos && owner.currentTile != null) ? owner.currentTile : board.GetTile(p);
 		GameObject content = t != null ? t.content : null;
 		return content != null ? content.GetComponent<Unit>() : null;
 	}
@@ -82,7 +183,7 @@ public abstract class BattleState : State
 	protected virtual void RefreshSecondaryStatPanel (Point p)
 	{
 		Unit target = GetUnit(p);
-		if (target != null)
+		if (target != null && target != turn.actor)
 			statPanelController.ShowSecondary(target.gameObject);
 		else
 			statPanelController.HideSecondary();

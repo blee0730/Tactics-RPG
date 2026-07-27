@@ -9,9 +9,26 @@ public class AttackPattern : MonoBehaviour
 	
 	public void Pick (PlanOfAttack plan)
 	{
-		pickers[index].Pick(plan);
-		index++;
-		if (index >= pickers.Count)
-			index = 0;
+		if (plan == null || pickers == null || pickers.Count == 0)
+			return;
+
+		int checkedCount = 0;
+		while (checkedCount < pickers.Count)
+		{
+			if (index < 0 || index >= pickers.Count)
+				index = 0;
+
+			BaseAbilityPicker picker = pickers[index];
+			index++;
+			if (index >= pickers.Count)
+				index = 0;
+
+			checkedCount++;
+			if (picker == null)
+				continue;
+
+			picker.Pick(plan);
+			return;
+		}
 	}
 }

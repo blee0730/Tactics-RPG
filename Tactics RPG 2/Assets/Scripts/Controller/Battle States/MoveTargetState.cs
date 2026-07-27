@@ -23,23 +23,66 @@ public class MoveTargetState : BattleState
 		board.DeSelectTiles(tiles);
 		tiles = null;
 		statPanelController.HidePrimary();
+		statPanelController.HideDetail();
 	}
 	
 	protected override void OnMove (object sender, InfoEventArgs<Point> e)
 	{
+		if (statPanelController.IsDetailVisible)
+			return;
+
+		// Cursor movement should not be limited to legal move endpoints.
+		// Occupied ally/enemy tiles are often removed from the destination list,
+		// but the player still needs to be able to move the cursor across them
+		// to reach highlighted tiles on the far side.
 		SelectTile(e.info + pos);
+		RefreshPrimaryStatPanel(pos);
+	}
+
+	protected override void OnCycleLayer (object sender, InfoEventArgs<int> e)
+	{
+		if (statPanelController.IsDetailVisible)
+			return;
+
+		// Layer cycling is a cursor-selection feature, not a movement confirmation.
+		// Allow cycling through any selectable top/splitTop at this X/Z point.
+		// The Fire/confirm step below still only allows actual movement to tiles
+		// returned by Movement.GetTilesInRange.
+		CycleTileLayer(e.info);
 		RefreshPrimaryStatPanel(pos);
 	}
 	
 	protected override void OnFire (object sender, InfoEventArgs<int> e)
 	{
+		if (statPanelController.IsDetailVisible)
+		{
+			if (e.info == 0)
+				statPanelController.CycleDetailPage();
+			else
+				statPanelController.HideDetail();
+			return;
+		}
+
 		if (e.info == 0)
 		{
+			Unit inspected = GetUnit(pos);
+			if (inspected != null)
+			{
+				statPanelController.ShowDetail(inspected.gameObject);
+				return;
+			}
+
 			if (tiles.Contains(owner.currentTile))
 				owner.ChangeState<MoveSequenceState>();
 		}
 		else
 		{
+			if (statPanelController.IsDetailVisible)
+			{
+				statPanelController.HideDetail();
+				return;
+			}
+
 			owner.ChangeState<CommandSelectionState>();
 		}
 	}

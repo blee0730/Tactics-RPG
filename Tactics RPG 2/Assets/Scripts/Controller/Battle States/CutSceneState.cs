@@ -1,65 +1,84 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class CutSceneState : BattleState 
+// CutSceneState now uses TacticsCutSceneBridge to play cutscenes
+// through the VN DialogueSystem instead of the old ConversationController.
+//
+// Conversation files live at: Assets/Resources/Conversations/
+// Format: plain .txt files using the VN dialogue syntax:
+//   Rein "So this is the battlefield..."
+//   Rosemary "Stay focused. They'll be on us soon."
+//
+// See the VN tutorial's dialogue format guide for the full syntax.
+
+public class CutSceneState : BattleState
 {
-	ConversationController conversationController;
-	ConversationData data;
+    TacticsCutSceneBridge bridge;
 
-	protected override void Awake ()
-	{
-		base.Awake ();
-		conversationController = owner.GetComponentInChildren<ConversationController>();
-	}
+    protected override void Awake()
+    {
+        base.Awake();
+        bridge = owner.GetComponentInChildren<TacticsCutSceneBridge>();
 
-	public override void Enter ()
-	{
-		base.Enter ();
-		if (IsBattleOver())
-		{
-			if (DidPlayerWin())
-				data = Resources.Load<ConversationData>("Conversations/OutroSceneWin");
-			else
-				data = Resources.Load<ConversationData>("Conversations/OutroSceneLose");
-		}
-		else
-		{
-			data = Resources.Load<ConversationData>("Conversations/IntroScene");
-		}
-		conversationController.Show(data);
-	}
+        if (bridge == null)
+            Debug.LogError("[CutSceneState] TacticsCutSceneBridge not found on BattleController. " +
+                           "Add it as a component.");
+    }
 
-	public override void Exit ()
-	{
-		base.Exit ();
-		if (data)
-			Resources.UnloadAsset(data);
-	}
+    public override void Enter()
+    {
+        base.Enter();
 
-	protected override void AddListeners ()
-	{
-		base.AddListeners ();
-		ConversationController.completeEvent += OnCompleteConversation;
-	}
+        string conversationFile;
 
-	protected override void RemoveListeners ()
-	{
-		base.RemoveListeners ();
-		ConversationController.completeEvent -= OnCompleteConversation;
-	}
+        if (IsBattleOver())
+        {
+            conversationFile = DidPlayerWin()
+                ? "Conversations/OutroSceneWin"
+                : "Conversations/OutroSceneLose";
+        }
+        else
+        {
+            conversationFile = "Conversations/IntroScene";
+        }
 
-	protected override void OnFire (object sender, InfoEventArgs<int> e)
-	{
-		base.OnFire (sender, e);
-		conversationController.Next();
-	}
+        if (bridge != null)
+            bridge.StartCutScene(conversationFile, OnCutSceneComplete);
+        else
+            OnCutSceneComplete(); // fallback — skip cutscene entirely
+    }
 
-	void OnCompleteConversation (object sender, System.EventArgs e)
-	{
-		if (IsBattleOver())
-			owner.ChangeState<EndBattleState>();
-		else
-			owner.ChangeState<SelectUnitState>();
-	}
+    public override void Exit()
+    {
+        base.Exit();
+        if (bridge != null)
+            bridge.StopCutScene();
+    }
+
+    protected override void AddListeners()
+    {
+        base.AddListeners();
+    }
+
+    protected override void RemoveListeners()
+    {
+        base.RemoveListeners();
+    }
+
+    // Confirm button press — advance dialogue in VN system
+    protected override void OnFire(object sender, InfoEventArgs<int> e)
+    {
+        base.OnFire(sender, e);
+        if (bridge != null)
+            bridge.Advance();
+    }
+
+    void OnCutSceneComplete()
+    {
+        if (IsBattleOver())
+            owner.ChangeState<EndBattleState>();
+        else
+            owner.ChangeState<SelectUnitState>();
+    }
 }

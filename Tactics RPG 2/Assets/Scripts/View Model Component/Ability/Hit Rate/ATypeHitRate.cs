@@ -5,7 +5,17 @@ public class ATypeHitRate : HitRate
 {
 	public override int Calculate (Tile target)
 	{
+<<<<<<< Updated upstream
+=======
+		if (target == null || target.content == null)
+			return 0;
+
+		Unit attacker = GetComponentInParent<Unit>();
+>>>>>>> Stashed changes
 		Unit defender = target.content.GetComponent<Unit>();
+		if (attacker == null || defender == null)
+			return 0;
+
 		if (AutomaticHit(defender))
 		    return Final(0);
 
@@ -19,6 +29,7 @@ public class ATypeHitRate : HitRate
 		return Final(evade);
 	}
 
+<<<<<<< Updated upstream
 	int GetEvade (Unit target)
 	{
 		Stats s = target.GetComponentInParent<Stats>();
@@ -36,5 +47,17 @@ public class ATypeHitRate : HitRate
 		default:
 			return rate / 4;
 		}
+=======
+	int GetHit(Unit attacker)
+	{
+		Stats s = attacker != null ? attacker.GetComponentInParent<Stats>() : null;
+		return s != null ? Mathf.Clamp(s[StatTypes.SKL], 0, 100) : 0;
+	}
+	
+	int GetEvade (Unit target)
+	{
+		Stats s = target != null ? target.GetComponentInParent<Stats>() : null;
+		return s != null ? Mathf.Clamp(s[StatTypes.SKL], 0, 100) : 0;
+>>>>>>> Stashed changes
 	}
 }

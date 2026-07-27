@@ -8,8 +8,20 @@ public class RandomAbilityPicker : BaseAbilityPicker
 
 	public override void Pick (PlanOfAttack plan)
 	{
-		int index = Random.Range(0, pickers.Count);
-		BaseAbilityPicker p = pickers[index];
-		p.Pick(plan);
+		if (plan == null || pickers == null || pickers.Count == 0)
+			return;
+
+		List<BaseAbilityPicker> valid = new List<BaseAbilityPicker>();
+		for (int i = 0; i < pickers.Count; ++i)
+		{
+			if (pickers[i] != null)
+				valid.Add(pickers[i]);
+		}
+
+		if (valid.Count == 0)
+			return;
+
+		int index = Random.Range(0, valid.Count);
+		valid[index].Pick(plan);
 	}
 }

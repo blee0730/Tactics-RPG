@@ -7,17 +7,47 @@ public class WalkMovement : Movement
 	#region Protected
 	protected override bool ExpandSearch (Tile from, Tile to)
 	{
-		// Skip if the distance in height between the two tiles is more than the unit can jump
-		if ((Mathf.Abs(from.height - to.height) > jumpHeight))
+		// Skip if the distance in height between the two tiles is more than the unit can jump.
+		if (Mathf.Abs(from.height - to.height) > jumpHeight)
 			return false;
 
-		// Skip if the tile is occupied by an enemy
-		if (to.content != null)
+		// Multilayer rule:
+		// Do not let a unit switch between stacked surfaces in the exact same X/Z
+		// column. That looked like the character falling through the bridge/floor.
+		// Layer changes must happen by jumping/dropping to an adjacent tile first:
+		// upper(P) -> lower(Q) -> lower(P), or lower(Q) -> upper(P) -> upper(...).
+		if (IsDirectSameColumnLayerSwitch(from, to))
+			return false;
+
+		// Edge transition rule:
+		// If a layer-changing step would pass through a stacked floor/ceiling at
+		// the edge, block it. Example: lower B -> upper C is illegal when upper B
+		// exists; the unit must have jumped lower A -> upper B first.
+		if (searchBoard != null && searchBoard.BlocksLayerTransitionThroughStack(from, to))
+			return false;
+
+		// Same-alliance units may be passed through, but occupied tiles are still
+		// removed from the final destination list by Movement.Filter.
+		if (!CanPassThrough(to))
 			return false;
 
 		return base.ExpandSearch(from, to);
 	}
 	
+	protected override bool CanPassThrough(Tile tile)
+	{
+		if (tile == null || tile.content == null)
+			return true;
+
+		Unit other = tile.content.GetComponent<Unit>();
+		if (other == null || other == unit)
+			return true;
+
+		Alliance mine = unit != null ? unit.GetComponentInChildren<Alliance>() : null;
+		Alliance theirs = other.GetComponentInChildren<Alliance>();
+		return mine != null && theirs != null && mine.IsMatch(theirs, Targets.Ally);
+	}
+
 	public override IEnumerator Traverse (Tile tile)
 	{
 		unit.Place(tile);
@@ -37,11 +67,14 @@ public class WalkMovement : Movement
 			Tile from = targets[i-1];
 			Tile to = targets[i];
 
-			Directions dir = from.GetDirection(to);
-			if (unit.dir != dir)
-				yield return StartCoroutine(Turn(dir));
+			if (from.pos != to.pos)
+			{
+				Directions dir = from.GetDirection(to);
+				if (unit.dir != dir)
+					yield return StartCoroutine(Turn(dir));
+			}
 
-			if (from.height == to.height)
+			if (Mathf.Approximately(from.height, to.height))
 				yield return StartCoroutine(Walk(to));
 			else
 				yield return StartCoroutine(Jump(to));

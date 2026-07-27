@@ -13,6 +13,14 @@ public class Tile : MonoBehaviour
 	public GameObject content;
 	[HideInInspector] public Tile prev;
 	[HideInInspector] public int distance;
+
+	// Search tie-break data used by Board.Search for layered maps.
+	// When two paths have the same movement cost, prefer the path that
+	// changes height/layer earlier, then continues along the chosen layer.
+	// This prevents paths like lower -> lower -> upper from clipping through
+	// the first upper tile when lower -> upper -> upper is equally valid.
+	[HideInInspector] public int layerChanges;
+	[HideInInspector] public int lastLayerChangeStep;
 	#endregion
 
 	#region Public
@@ -47,7 +55,8 @@ public class Tile : MonoBehaviour
 		stone,
 		wood,
 		water,
-		sky
+		sky,
+		ice
 	}
 	#endregion
 

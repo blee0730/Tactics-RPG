@@ -8,8 +8,10 @@ public class BattleController : StateMachine
 	public Board board;
 	public LevelData levelData;
 	public Transform tileSelectionIndicator;
+	public float tileSelectionIndicatorYOffset = 0.08f;
 	public Point pos;
-	public Tile currentTile { get { return board.GetTile(pos); }}
+	public Tile selectedTile;
+	public Tile currentTile { get { return selectedTile != null ? selectedTile : board.GetTile(pos); }}
 	public AbilityMenuPanelController abilityMenuPanelController;
 	public StatPanelController statPanelController;
 	public HitSuccessIndicator hitSuccessIndicator;

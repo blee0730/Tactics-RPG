@@ -15,8 +15,31 @@ public class InitBattleState : BattleState
 		board.Load( levelData );
 		Point p = new Point((int)levelData.tiles[0].x, (int)levelData.tiles[0].y);
 		SelectTile(p);
-		SpawnTestUnits();
-		AddVictoryCondition();
+
+		AbilityTestLabMode testLab = owner.GetComponent<AbilityTestLabMode>();
+		if (testLab != null && testLab.enabled)
+		{
+			testLab.BuildLab(owner, board);
+		}
+		else
+		{
+			SpawnTestUnits();
+			AddVictoryCondition();
+
+			if (owner.GetComponent<AutoStatusController>() == null)
+				owner.gameObject.AddComponent<AutoStatusController>();
+		}
+
+		AnalyzeSystemController analyze = owner.GetComponent<AnalyzeSystemController>();
+		if (analyze == null)
+			analyze = owner.gameObject.AddComponent<AnalyzeSystemController>();
+		analyze.EnsureAnalyzeLearners();
+
+		AbilityMasterySystemController mastery = owner.GetComponent<AbilityMasterySystemController>();
+		if (mastery == null)
+			mastery = owner.gameObject.AddComponent<AbilityMasterySystemController>();
+		mastery.EnsureMasteryTrackers(testLab != null && testLab.enabled);
+
 		owner.round = owner.gameObject.AddComponent<TurnOrderController>().Round();
 		yield return null;
 		owner.ChangeState<CutSceneState>();
@@ -26,9 +49,12 @@ public class InitBattleState : BattleState
 	{
 		string[] recipes = new string[]
 		{
-			"Alaois",
-			"Hania",
-			"Kamau",
+			"Rein",
+			"Usagi",
+			"Rosemary",
+			"Lazuli",
+			"Lucy",
+			"Holly",
 			"Enemy Rogue",
 			"Enemy Warrior",
 			"Enemy Wizard"
@@ -56,7 +82,7 @@ public class InitBattleState : BattleState
 			units.Add(unit);
 		}
 		
-		SelectTile(units[0].tile.pos);
+		SelectTile(units[0].tile);
 	}
 	
 	void AddVictoryCondition ()
