@@ -66,7 +66,7 @@ public class InitBattleState : BattleState
 		List<Tile> locations = new List<Tile>(board.topTiles.Values);
 		for (int i = 0; i < recipes.Length; ++i)
 		{
-			int level = UnityEngine.Random.Range(9, 12);
+			int level = 1;  //UnityEngine.Random.Range(9, 12);
 			GameObject instance = UnitFactory.Create(recipes[i], level);
 			instance.transform.SetParent(unitContainer.transform);
 			

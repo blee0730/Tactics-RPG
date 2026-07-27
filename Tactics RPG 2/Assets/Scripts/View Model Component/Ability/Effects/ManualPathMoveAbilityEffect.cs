@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
+<<<<<<< Updated upstream
+=======
+using System.Collections;
+>>>>>>> Stashed changes
 using System.Collections.Generic;
 
 public class ManualPathMoveAbilityEffect : BaseAbilityEffect
 {
+<<<<<<< Updated upstream
     public override int Predict(Tile target)
     {
         return 0;
@@ -31,4 +36,43 @@ public class ManualPathMoveAbilityEffect : BaseAbilityEffect
         }
         return 0;
     }
+=======
+	public bool faceEachStep = true;
+	public bool requireEmptyEndpoint = true;
+
+	public override int Predict (Tile target)
+	{
+		return 0;
+	}
+
+	protected override int OnApply (Tile target)
+	{
+		PathAbilityArea pathArea = GetComponentInParent<PathAbilityArea>();
+		Unit mover = GetComponentInParent<Unit>();
+		if (pathArea == null || mover == null)
+			return 0;
+
+		Tile endpoint = pathArea.Endpoint;
+		if (endpoint == null)
+			return 0;
+		if (requireEmptyEndpoint && endpoint.content != null)
+			return 0;
+
+		Tile previous = mover.tile;
+		for (int i = 0; i < pathArea.SelectedPath.Count; ++i)
+		{
+			Tile step = pathArea.SelectedPath[i];
+			if (step == null)
+				continue;
+
+			if (faceEachStep && previous != null)
+				mover.dir = previous.GetDirection(step);
+			previous = step;
+		}
+
+		mover.Place(endpoint);
+		mover.Match();
+		return 0;
+	}
+>>>>>>> Stashed changes
 }

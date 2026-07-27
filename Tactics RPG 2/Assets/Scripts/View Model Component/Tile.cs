@@ -6,6 +6,8 @@ public class Tile : MonoBehaviour
 	#region Fields / Properties
 	public Point pos;
 	public float height;
+	public bool isFlammable;
+	public bool isWet;
 	public TileType tileType;
 	public bool topTile;
 	public bool splitTop;

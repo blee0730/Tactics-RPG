@@ -12,7 +12,7 @@ public class CureAbilityEffect : BaseAbilityEffect
 			if (_curableTypes == null)
 			{
 				_curableTypes = new HashSet<Type>();
-				_curableTypes.Add( typeof(PoisonStatusEffect) );
+				_curableTypes.Add( typeof(DoTStatusEffect) );
 				_curableTypes.Add( typeof(BlindStatusEffect) );
 				_curableTypes.Add( typeof(SlowStatusEffect) );
 				_curableTypes.Add( typeof(StopStatusEffect) );

@@ -76,6 +76,7 @@ public abstract class BattleState : State
 		SelectTile(tile);
 	}
 
+<<<<<<< Updated upstream
 	protected virtual void SelectTile (Point p, List<Tile> allowedTiles)
 	{
 		if (allowedTiles == null)
@@ -109,6 +110,8 @@ public abstract class BattleState : State
 			SelectTile(best);
 	}
 
+=======
+>>>>>>> Stashed changes
 	protected virtual void SelectTile (Tile tile)
 	{
 		if (tile == null || owner.selectedTile == tile)
@@ -116,6 +119,7 @@ public abstract class BattleState : State
 
 		pos = tile.pos;
 		owner.selectedTile = tile;
+<<<<<<< Updated upstream
 
 		Vector3 indicatorPosition = tile.center;
 		float indicatorOffset = owner.tileSelectionIndicatorYOffset;
@@ -123,6 +127,9 @@ public abstract class BattleState : State
 			indicatorOffset = 0.08f;
 		indicatorPosition.y += indicatorOffset;
 		tileSelectionIndicator.localPosition = indicatorPosition;
+=======
+		tileSelectionIndicator.localPosition = tile.center;
+>>>>>>> Stashed changes
 	}
 
 	protected virtual void CycleTileLayer (int direction)
@@ -136,6 +143,7 @@ public abstract class BattleState : State
 		if (stack.Count <= 1)
 			return;
 
+<<<<<<< Updated upstream
 		List<Tile> candidates = new List<Tile>();
 		for (int i = 0; i < stack.Count; ++i)
 		{
@@ -162,6 +170,29 @@ public abstract class BattleState : State
 		nextIndex %= candidates.Count;
 
 		SelectTile(candidates[nextIndex]);
+=======
+		int index = stack.IndexOf(owner.currentTile);
+		if (index < 0)
+			index = stack.IndexOf(board.GetTile(pos));
+		if (index < 0)
+			index = stack.Count - 1;
+
+		int step = direction >= 0 ? 1 : -1;
+		for (int i = 1; i <= stack.Count; ++i)
+		{
+			int nextIndex = index + (step * i);
+			while (nextIndex < 0)
+				nextIndex += stack.Count;
+			nextIndex %= stack.Count;
+
+			Tile candidate = stack[nextIndex];
+			if (allowedTiles == null || allowedTiles.Contains(candidate))
+			{
+				SelectTile(candidate);
+				return;
+			}
+		}
+>>>>>>> Stashed changes
 	}
 
 	protected virtual Unit GetUnit (Point p)

@@ -10,10 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2325398774793505671}
   - component: {fileID: 6073600034261444155}
-  - component: {fileID: 1833451689382658833}
-  - component: {fileID: -1394772933735490261}
-  - component: {fileID: -3097361622957821033}
-  - component: {fileID: -6016068506352643330}
   m_Layer: 0
   m_Name: Rogue
   m_TagString: Untagged
@@ -48,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c750bedbcd144b6b647b8edb4ac5d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   baseStats: 200000000d000000330000004300000033000000430000006e000000
   growStats:
@@ -117,6 +114,10 @@ MonoBehaviour:
 =======
   baseStats: 050000000500000003000000030000000000000003000000050000000500000005000000020000000200000004000000
   growStats:
+=======
+  baseStats: 050000000500000003000000030000000000000003000000050000000500000005000000020000000200000004000000
+  growStats:
+>>>>>>> Stashed changes
   - 0.7
   - 0.7
   - 0.7
@@ -129,4 +130,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0.45
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

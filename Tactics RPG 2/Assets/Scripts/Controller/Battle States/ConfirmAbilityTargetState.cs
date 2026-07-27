@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class ConfirmAbilityTargetState : BattleState
 {
+	Unit attacker;
 	List<Tile> tiles;
 	AbilityArea aa;
 	int index = 0;
@@ -13,8 +14,11 @@ public class ConfirmAbilityTargetState : BattleState
 		base.Enter ();
 		aa = turn.ability.GetComponent<AbilityArea>();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		tiles = aa.GetTilesInArea(board, pos);
 =======
+=======
+>>>>>>> Stashed changes
 		attacker = aa != null ? aa.GetComponentInParent<Unit>() : null;
 		if (aa == null)
 		{
@@ -30,6 +34,9 @@ public class ConfirmAbilityTargetState : BattleState
 		if (tiles == null)
 			tiles = new List<Tile>();
 		tiles.RemoveAll(t => t == null);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		board.SelectTiles(tiles);
 		FindTargets();
@@ -44,8 +51,11 @@ public class ConfirmAbilityTargetState : BattleState
 		{
 			statPanelController.HideSecondary();
 			hitSuccessIndicator.Hide();
+<<<<<<< Updated upstream
 			if (driver.Current == Drivers.Human)
 				StartCoroutine(RejectInvalidTargetSelection());
+=======
+>>>>>>> Stashed changes
 		}
 		if (driver.Current == Drivers.Computer)
 			StartCoroutine(ComputerDisplayAbilitySelection());
@@ -76,7 +86,10 @@ public class ConfirmAbilityTargetState : BattleState
 				owner.ChangeState<PerformAbilityState>();
 		}
 		else
+		{
 			owner.ChangeState<AbilityTargetState>();
+			aa.counter = aa.count;
+		}
 	}
 
 
@@ -105,7 +118,7 @@ public class ConfirmAbilityTargetState : BattleState
 				turn.targets.Add(tiles[i]);
 	}
 
-	void SetTarget (int target)
+	void SetTarget(int target)
 	{
 		if (turn.targets == null || turn.targets.Count == 0)
 			return;
@@ -117,6 +130,7 @@ public class ConfirmAbilityTargetState : BattleState
 			index = 0;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		if (turn.targets.Count > 0)
 		{
 			RefreshSecondaryStatPanel(turn.targets[index].pos);
@@ -124,6 +138,18 @@ public class ConfirmAbilityTargetState : BattleState
 		}
 	}
 
+=======
+		Tile selected = turn.targets[index];
+		Unit selectedUnit = selected != null && selected.content != null ? selected.content.GetComponent<Unit>() : null;
+		if (selectedUnit != null && selectedUnit != turn.actor)
+			RefreshSecondaryStatPanel(selected.pos);
+		else
+			statPanelController.HideSecondary();
+
+		UpdateHitSuccessIndicator();
+	}
+	
+>>>>>>> Stashed changes
 =======
 		Tile selected = turn.targets[index];
 		Unit selectedUnit = selected != null && selected.content != null ? selected.content.GetComponent<Unit>() : null;

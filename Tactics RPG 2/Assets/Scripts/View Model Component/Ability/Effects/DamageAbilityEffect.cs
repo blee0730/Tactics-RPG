@@ -4,9 +4,19 @@ using System.Collections.Generic;
 
 public class DamageAbilityEffect : BaseAbilityEffect 
 {
+<<<<<<< Updated upstream
 	public const string WillApplyDamageNotification = "DamageAbilityEffect.WillApplyDamageNotification";
 	public const string DamageAppliedNotification = "DamageAbilityEffect.DamageAppliedNotification";
 
+=======
+	// Backward-compatible post-damage notification used by older status/controller code.
+	public const string DamageAppliedNotification = "DamageAbilityEffect.DamageAppliedNotification";
+
+	// New pre/post damage hooks used by Counterattack and future interrupt/reaction abilities.
+	public const string WillApplyDamageNotification = "DamageAbilityEffect.WillApplyDamageNotification";
+	public const string DidApplyDamageNotification = "DamageAbilityEffect.DidApplyDamageNotification";
+
+>>>>>>> Stashed changes
 	#region Public
 	public override int Predict (Tile target)
 	{
@@ -51,6 +61,10 @@ public class DamageAbilityEffect : BaseAbilityEffect
 		if (target == null || target.content == null)
 			return 0;
 
+<<<<<<< Updated upstream
+=======
+		Unit attacker = GetComponentInParent<Unit>();
+>>>>>>> Stashed changes
 		Unit defender = target.content.GetComponent<Unit>();
 		if (defender == null)
 			return 0;
@@ -64,6 +78,7 @@ public class DamageAbilityEffect : BaseAbilityEffect
 		// Clamp the damage to a range
 		value = Mathf.Clamp(value, minDamage, maxDamage);
 
+<<<<<<< Updated upstream
 		Unit attacker = GetComponentInParent<Unit>();
 
 		// Give reactive statuses such as Counterattack a chance to cancel or modify
@@ -74,11 +89,22 @@ public class DamageAbilityEffect : BaseAbilityEffect
 		if (info.cancelDamage)
 			return 0;
 		value = info.damageAmount;
+=======
+		DamageApplicationInfo appInfo = new DamageApplicationInfo(this, target, attacker, defender, value);
+		this.PostNotification(WillApplyDamageNotification, appInfo);
+		if (appInfo.cancel)
+			return 0;
+
+		value = Mathf.Clamp(appInfo.amount, minDamage, maxDamage);
+		if (value == 0)
+			return 0;
+>>>>>>> Stashed changes
 
 		// Apply the damage to the target
 		Stats s = defender.GetComponent<Stats>();
 		if (s != null)
 		{
+<<<<<<< Updated upstream
 			if (value < 0)
 			{
 				LastDamageMemory memory = defender.GetComponent<LastDamageMemory>();
@@ -88,6 +114,10 @@ public class DamageAbilityEffect : BaseAbilityEffect
 			}
 
 			s[StatTypes.HP] += value;
+=======
+			s[StatTypes.HP] += value;
+			this.PostNotification(DidApplyDamageNotification, appInfo);
+>>>>>>> Stashed changes
 			this.PostNotification(DamageAppliedNotification, new DamageInfo(attacker, defender, this, target, value));
 		}
 		return value;

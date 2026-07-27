@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+<<<<<<< Updated upstream
 
 public class ApplyCounterattackAbilityEffect : BaseAbilityEffect
 {
@@ -39,4 +40,49 @@ public class ApplyCounterattackAbilityEffect : BaseAbilityEffect
         effect.consumeOnFailure = consumeOnFailure;
         return 0;
     }
+=======
+using System.Collections;
+
+public class ApplyCounterattackAbilityEffect : BaseAbilityEffect
+{
+	[Range(0, 100)] public int baseChance = 50;
+	public int skillDifferenceMultiplier = 5;
+	[Range(0, 100)] public int minChance = 10;
+	[Range(0, 100)] public int maxChance = 90;
+	public float counterDamagePercent = 1f;
+	public bool onlyCounterAdjacentAttackers = true;
+	public bool consumeOnSuccess = false;
+	public bool consumeOnFailure = false;
+
+	public override int Predict (Tile target)
+	{
+		return 0;
+	}
+
+	protected override int OnApply (Tile target)
+	{
+		if (target == null || target.content == null)
+			return 0;
+
+		Status status = target.content.GetComponentInChildren<Status>();
+		if (status == null)
+			return 0;
+
+		UntilOwnerNextTurnStatusCondition condition = status.Add<CounterattackStatusEffect, UntilOwnerNextTurnStatusCondition>();
+		CounterattackStatusEffect effect = condition.GetComponentInParent<CounterattackStatusEffect>();
+		if (effect != null)
+		{
+			effect.baseChance = baseChance;
+			effect.skillDifferenceMultiplier = skillDifferenceMultiplier;
+			effect.minChance = minChance;
+			effect.maxChance = maxChance;
+			effect.counterDamagePercent = counterDamagePercent;
+			effect.onlyCounterAdjacentAttackers = onlyCounterAdjacentAttackers;
+			effect.consumeOnSuccess = consumeOnSuccess;
+			effect.consumeOnFailure = consumeOnFailure;
+		}
+
+		return 0;
+	}
+>>>>>>> Stashed changes
 }

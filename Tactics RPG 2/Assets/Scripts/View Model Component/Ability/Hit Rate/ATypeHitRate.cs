@@ -1,40 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ATypeHitRate : HitRate 
+public class ATypeHitRate : HitRate
 {
-	public override int Calculate (Tile target)
+	public override int Calculate(Tile target)
 	{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 		if (target == null || target.content == null)
 			return 0;
 
 		Unit attacker = GetComponentInParent<Unit>();
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		Unit defender = target.content.GetComponent<Unit>();
 		if (attacker == null || defender == null)
 			return 0;
 
 		if (AutomaticHit(defender))
-		    return Final(0);
+			return 100;
 
 		if (AutomaticMiss(defender))
-			return Final(100);
+			return 0;
 
+		int proficiency = 1;
+		int hit = GetHit(attacker);
 		int evade = GetEvade(defender);
-		evade = AdjustForRelativeFacing(defender, evade);
 		evade = AdjustForStatusEffects(defender, evade);
-		evade = Mathf.Clamp(evade, 5, 95);
-		return Final(evade);
+		return Final(attacker, defender, hit, proficiency, evade);
 	}
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+	int GetHit(Unit attacker)
+	{
+		Stats s = attacker != null ? attacker.GetComponentInParent<Stats>() : null;
+		return s != null ? Mathf.Clamp(s[StatTypes.SKL], 0, 100) : 0;
+	}
+	
+>>>>>>> Stashed changes
 	int GetEvade (Unit target)
 	{
-		Stats s = target.GetComponentInParent<Stats>();
-		return Mathf.Clamp(s[StatTypes.EVD], 0, 100);
+		Stats s = target != null ? target.GetComponentInParent<Stats>() : null;
+		return s != null ? Mathf.Clamp(s[StatTypes.SKL], 0, 100) : 0;
 	}
+<<<<<<< Updated upstream
 
 	int AdjustForRelativeFacing (Unit target, int rate)
 	{
@@ -60,4 +76,6 @@ public class ATypeHitRate : HitRate
 		return s != null ? Mathf.Clamp(s[StatTypes.SKL], 0, 100) : 0;
 >>>>>>> Stashed changes
 	}
+=======
+>>>>>>> Stashed changes
 }

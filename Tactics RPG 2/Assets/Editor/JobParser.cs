@@ -40,6 +40,7 @@ public static class JobParser
 			job.baseStats[i] = ReadStartingStat(elements, i);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		StatModifierFeature evade = GetFeature (obj, StatTypes.EVD);
 		evade.amount = Convert.ToInt32(elements[8]);
 
@@ -53,11 +54,17 @@ public static class JobParser
 		jump.amount = Convert.ToInt32(elements[11]);
 =======
 
+=======
+
+>>>>>>> Stashed changes
 		// In this project, every normal job stat lives in Job.baseStats / Job.growStats.
 		// Older versions of the parser also added StatModifierFeature components for
 		// SKL, FRT, LCK, MOV, and JMP. Those features are redundant with baseStats
 		// and can subtract/double stats during future job changes, so remove them.
 		RemoveGeneratedJobStatModifierFeatures(obj);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	}
 

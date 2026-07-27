@@ -7,7 +7,7 @@ public class PhysicalAbilityPower : BaseAbilityPower
 	
 	protected override int GetBaseAttack ()
 	{
-		return GetComponentInParent<Stats>()[StatTypes.ATK];
+		return GetComponentInParent<Stats>()[StatTypes.STR];
 	}
 
 	protected override int GetBaseDefense (Unit target)

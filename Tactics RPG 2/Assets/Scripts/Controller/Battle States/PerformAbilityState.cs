@@ -1,15 +1,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class PerformAbilityState : BattleState 
+public class PerformAbilityState : BattleState
 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	public override void Enter ()
+=======
+	public override void Enter()
+>>>>>>> Stashed changes
 	{
-		base.Enter ();
+		base.Enter();
+
 		turn.hasUnitActed = true;
 		if (turn.hasUnitMoved)
 			turn.lockMove = true;
+<<<<<<< Updated upstream
 =======
 	public override void Enter()
 	{
@@ -23,6 +29,10 @@ public class PerformAbilityState : BattleState
 			turn.lockMove = true;
 
 >>>>>>> Stashed changes
+=======
+
+
+>>>>>>> Stashed changes
 		StartCoroutine(Animate());
 	}
 	
@@ -30,6 +40,7 @@ public class PerformAbilityState : BattleState
 	{
 		// TODO play animations, etc
 		yield return null;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 		ApplyAbility();
 		
@@ -40,6 +51,12 @@ public class PerformAbilityState : BattleState
 			turn.ability.Perform(turn.targets);
 			TupleAbilityModifier.ClearActive(turn.ability);
 		}
+
+>>>>>>> Stashed changes
+=======
+
+		if (turn.ability != null)
+			turn.ability.Perform(turn.targets);
 
 >>>>>>> Stashed changes
 		if (IsBattleOver())
@@ -53,6 +70,7 @@ public class PerformAbilityState : BattleState
 	}
 <<<<<<< Updated upstream
 	
+<<<<<<< Updated upstream
 	void ApplyAbility ()
 	{
 		turn.ability.Perform(turn.targets);
@@ -73,5 +91,10 @@ public class PerformAbilityState : BattleState
 			return false;
 
 		return true;
+=======
+	bool UnitHasControl ()
+	{
+		return turn.actor != null && turn.actor.GetComponentInChildren<KnockOutStatusEffect>() == null;
+>>>>>>> Stashed changes
 	}
 }

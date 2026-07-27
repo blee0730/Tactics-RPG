@@ -4,6 +4,7 @@ using System.Collections;
 public class StopStatusEffect : StatusEffect 
 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	Stats myStats;
 
 	void OnEnable ()
@@ -17,10 +18,19 @@ public class StopStatusEffect : StatusEffect
 
 	void OnEnable ()
 	{
+=======
+	Unit owner;
+
+	void OnEnable ()
+	{
+>>>>>>> Stashed changes
 		owner = GetComponentInParent<Unit>();
 		if (owner)
 			this.AddObserver(OnTurnCheck, TurnOrderController.TurnCheckNotification, owner);
 		this.AddObserver(OnAutomaticHitCheck, HitRate.AutomaticHitCheckNotification);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	}
 	
@@ -34,8 +44,14 @@ public class StopStatusEffect : StatusEffect
 	void OnTurnCheck (object sender, object args)
 	{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		ValueChangeException exc = args as ValueChangeException;
 		exc.FlipToggle();
+=======
+		BaseException exc = args as BaseException;
+		if (exc != null && exc.defaultToggle == true)
+			exc.FlipToggle();
+>>>>>>> Stashed changes
 =======
 		BaseException exc = args as BaseException;
 		if (exc != null && exc.defaultToggle == true)
@@ -46,9 +62,14 @@ public class StopStatusEffect : StatusEffect
 	void OnAutomaticHitCheck (object sender, object args)
 	{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		Unit owner = GetComponentInParent<Unit>();
 		MatchException exc = args as MatchException;
 		if (owner == exc.target)
+=======
+		MatchException exc = args as MatchException;
+		if (exc != null && exc.target == owner && exc.defaultToggle == false)
+>>>>>>> Stashed changes
 =======
 		MatchException exc = args as MatchException;
 		if (exc != null && exc.target == owner && exc.defaultToggle == false)

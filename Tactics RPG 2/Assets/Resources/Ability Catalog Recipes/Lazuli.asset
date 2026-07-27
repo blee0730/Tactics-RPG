@@ -32,7 +32,11 @@ MonoBehaviour:
     - Fire/Firewall
     - Fire/Flame Arrow
     - Fire/Fireball
+<<<<<<< Updated upstream
     - Fire/Trailblaze
+=======
+    - Fire/Flame Walk
+>>>>>>> Stashed changes
   - name: Water
     entries:
     - Water/Water Ball
@@ -46,4 +50,8 @@ MonoBehaviour:
     - Ice/Ice Wall
     - Ice/Ice Shield
     - Ice/Hail
+<<<<<<< Updated upstream
     - Ice/Frost Walk
+=======
+    - Ice/Ice Walk
+>>>>>>> Stashed changes

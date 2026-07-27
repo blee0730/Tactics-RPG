@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Tactics RPG 2/Assets/Scripts/Controller/AnalyzeSystemController.cs.meta
 guid: 0b002e9d2875a3f49a8520c2eff051b1
+========
+guid: b247a39438487124f8e6bc3437699b4c
+>>>>>>>> Stashed changes:Tactics RPG 2/Assets/Scripts/PreProduction/BoardCreatorInputController.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

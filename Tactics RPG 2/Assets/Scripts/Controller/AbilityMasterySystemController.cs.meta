@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:Tactics RPG 2/Assets/Scripts/Controller/AbilityMasterySystemController.cs.meta
 guid: c2e679ef6faac674fa59aa65f7102657
+========
+guid: a207932ff3f0e1b49a4fc87c344f9b9b
+>>>>>>>> Stashed changes:Tactics RPG 2/Assets/Scripts/Enums/AbilitySourceTypes.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

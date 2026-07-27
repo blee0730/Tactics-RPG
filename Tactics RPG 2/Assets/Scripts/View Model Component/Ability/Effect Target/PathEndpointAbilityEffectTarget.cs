@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+<<<<<<< Updated upstream
 
 public class PathEndpointAbilityEffectTarget : AbilityEffectTarget
 {
@@ -16,4 +17,24 @@ public class PathEndpointAbilityEffectTarget : AbilityEffectTarget
             return false;
         return true;
     }
+=======
+using System.Collections;
+
+public class PathEndpointAbilityEffectTarget : AbilityEffectTarget
+{
+	public bool requireEmptyEndpoint = true;
+
+	public override bool IsTarget (Tile tile)
+	{
+		PathAbilityArea pathArea = GetComponentInParent<PathAbilityArea>();
+		if (pathArea == null || tile == null)
+			return false;
+
+		Tile endpoint = pathArea.Endpoint;
+		if (endpoint == null || endpoint != tile)
+			return false;
+
+		return !requireEmptyEndpoint || tile.content == null;
+	}
+>>>>>>> Stashed changes
 }

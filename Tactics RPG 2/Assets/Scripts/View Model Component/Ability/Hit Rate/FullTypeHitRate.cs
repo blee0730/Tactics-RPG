@@ -9,6 +9,7 @@ public class FullTypeHitRate : HitRate
 	{
 		if (target == null || target.content == null)
 			return 0;
+<<<<<<< Updated upstream
 
 		Unit defender = target.content.GetComponent<Unit>();
 		if (defender == null)
@@ -16,7 +17,16 @@ public class FullTypeHitRate : HitRate
 
 		if (AutomaticMiss(defender))
 			return Final(100);
+=======
+>>>>>>> Stashed changes
 
-		return Final (0);
+		Unit defender = target.content.GetComponent<Unit>();
+		if (defender == null)
+			return 0;
+
+		if (AutomaticMiss(defender))
+			return 0;
+
+		return 100;
 	}
 }

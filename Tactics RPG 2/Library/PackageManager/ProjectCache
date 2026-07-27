@@ -192,8 +192,11 @@ m_ResolvedPackages:
     - 2.11.4
     - 2.12.4
     - 2.13.3
+<<<<<<< Updated upstream
     - 2.13.4
     - 2.13.5
+=======
+>>>>>>> Stashed changes
     compatible:
     - 2.2.0
     - 2.3.1
@@ -873,7 +876,10 @@ m_ResolvedPackages:
     - 1.9.9
     - 1.9.10
     - 1.9.11
+<<<<<<< Updated upstream
     - 1.9.12
+=======
+>>>>>>> Stashed changes
     compatible:
     - 1.9.1
     - 1.9.2

@@ -72,9 +72,13 @@ public class TurnOrderController : MonoBehaviour
 	#region Public
 	public IEnumerator Round ()
 	{
+<<<<<<< Updated upstream
 		if (battleController == null)
 			battleController = GetComponent<BattleController>();
 
+=======
+		BattleController bc = GetComponent<BattleController>();
+>>>>>>> Stashed changes
 		while (true)
 		{
 			roundNumber += 1;
@@ -84,36 +88,47 @@ public class TurnOrderController : MonoBehaviour
 			BroadcastTurnOrderChanged();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			List<Unit> units = new List<Unit>( bc.units );
+=======
+			List<Unit> units = new List<Unit>(bc.units);
+>>>>>>> Stashed changes
 			for (int i = 0; i < units.Count; ++i)
 			{
 				Stats s = units[i].GetComponent<Stats>();
 				s[StatTypes.CTR] += s[StatTypes.SPD];
 			}
 
-			units.Sort( (a,b) => GetCounter(a).CompareTo(GetCounter(b)) );
+			units.Sort((a, b) => GetCounter(a).CompareTo(GetCounter(b)));
 
 			for (int i = units.Count - 1; i >= 0; --i)
 			{
-				if (CanTakeTurn(units[i]))
+				Unit current = units[i];
+				bc.turn.Change(current);
+
+				// Start-of-turn effects such as DoT should resolve before checking
+				// whether a status prevents the unit from acting this turn.
+				current.PostNotification(TurnBeganNotification);
+
+				if (!CanTakeTurn(current))
 				{
-					bc.turn.Change(units[i]);
-					units[i].PostNotification(TurnBeganNotification);
-
-					yield return units[i];
-
-					int cost = turnCost;
-					if (bc.turn.hasUnitMoved)
-						cost += moveCost;
-					if (bc.turn.hasUnitActed)
-						cost += actionCost;
-
-					Stats s = units[i].GetComponent<Stats>();
-					s.SetValue(StatTypes.CTR, s[StatTypes.CTR] - cost, false);
-
-					units[i].PostNotification(TurnCompletedNotification);
+					PayTurnCost(current, turnCost);
+					current.PostNotification(TurnCompletedNotification);
+					continue;
 				}
+
+				yield return current;
+
+				int cost = turnCost;
+				if (bc.turn.hasUnitMoved)
+					cost += moveCost;
+				if (bc.turn.hasUnitActed)
+					cost += actionCost;
+
+				PayTurnCost(current, cost);
+				current.PostNotification(TurnCompletedNotification);
 			}
+<<<<<<< Updated upstream
 			
 =======
 			while (HasRemainingUnitsThisRound())
@@ -149,6 +164,9 @@ public class TurnOrderController : MonoBehaviour
 
 			activeTurnUnit = null;
 			BroadcastTurnOrderChanged();
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
 			this.PostNotification(RoundEndedNotification);
 		}
@@ -221,9 +239,15 @@ public class TurnOrderController : MonoBehaviour
 <<<<<<< Updated upstream
 	bool CanTakeTurn (Unit target)
 	{
-		BaseException exc = new BaseException( GetCounter(target) >= turnActivation );
-		target.PostNotification( TurnCheckNotification, exc );
+		BaseException exc = new BaseException(true);
+		target.PostNotification(TurnCheckNotification, exc);
 		return exc.toggle;
+	}
+
+	void PayTurnCost (Unit target, int cost)
+	{
+		Stats s = target.GetComponent<Stats>();
+		s.SetValue(StatTypes.CTR, s[StatTypes.CTR] - cost, false);
 	}
 
 	int GetCounter (Unit target)

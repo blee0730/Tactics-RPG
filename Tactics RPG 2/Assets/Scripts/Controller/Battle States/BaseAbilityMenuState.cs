@@ -31,7 +31,13 @@ public abstract class BaseAbilityMenuState : BattleState
 
 	protected override void OnMove (object sender, InfoEventArgs<Point> e)
 	{
-		if (e.info.x > 0 || e.info.y < 0)
+		if (cameraRig.transform.rotation.eulerAngles.y >= 270 && cameraRig.transform.rotation.eulerAngles.y <= 360 && (e.info.x > 0 || e.info.y < 0))
+			abilityMenuPanelController.Next();
+		else if(cameraRig.transform.rotation.eulerAngles.y >= 0 && cameraRig.transform.rotation.eulerAngles.y < 90 && (e.info.x < 0 || e.info.y > 0))
+			abilityMenuPanelController.Next();
+		else if(cameraRig.transform.rotation.eulerAngles.y >= 90 && cameraRig.transform.rotation.eulerAngles.y < 180 && (e.info.x > 0 || e.info.y > 0))
+			abilityMenuPanelController.Next();
+		else if(cameraRig.transform.rotation.eulerAngles.y >= 180 && cameraRig.transform.rotation.eulerAngles.y < 270 && (e.info.x > 0 || e.info.y < 0))
 			abilityMenuPanelController.Next();
 		else
 			abilityMenuPanelController.Previous();

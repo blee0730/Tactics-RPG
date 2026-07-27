@@ -79,7 +79,11 @@ public class CommandSelectionState : BaseAbilityMenuState
 		if (turn.CanMove() && !turn.actor.cantMove && turn.plan.moveLocation != turn.actor.tile.pos)
 			owner.ChangeState<MoveTargetState>();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		else if (turn.hasUnitActed == false && turn.plan.ability != null)
+=======
+		else if (turn.CanAct() && !turn.actor.cantAct && turn.plan.ability != null)
+>>>>>>> Stashed changes
 =======
 		else if (turn.CanAct() && !turn.actor.cantAct && turn.plan.ability != null)
 >>>>>>> Stashed changes

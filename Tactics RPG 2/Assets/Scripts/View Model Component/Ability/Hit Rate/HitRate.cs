@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class HitRate : MonoBehaviour 
+public abstract class HitRate : MonoBehaviour
 {
 	#region Notifications
 	/// <summary>
@@ -23,12 +23,12 @@ public abstract class HitRate : MonoBehaviour
 	#endregion
 
 	#region Fields
-	public virtual bool IsAngleBased { get { return true; }}
+	public virtual bool IsAngleBased { get { return true; } }
 	protected Unit attacker;
 	#endregion
 
 	#region MonoBehaviour
-	protected virtual void Start ()
+	protected virtual void Start()
 	{
 		attacker = GetComponentInParent<Unit>();
 	}
@@ -39,9 +39,9 @@ public abstract class HitRate : MonoBehaviour
 	/// Returns a value in the range of 0 t0 100 as a percent chance of
 	/// an ability succeeding to hit
 	/// </summary>
-	public abstract int Calculate (Tile target);
-	
-	public virtual bool RollForHit (Tile target)
+	public abstract int Calculate(Tile target);
+
+	public virtual bool RollForHit(Tile target)
 	{
 		if (target == null)
 			return false;
@@ -53,7 +53,7 @@ public abstract class HitRate : MonoBehaviour
 	#endregion
 
 	#region Protected
-	protected virtual bool AutomaticHit (Unit target)
+	protected virtual bool AutomaticHit(Unit target)
 	{
 		if (target == null)
 			return false;
@@ -63,7 +63,7 @@ public abstract class HitRate : MonoBehaviour
 		return exc.toggle;
 	}
 
-	protected virtual bool AutomaticMiss (Unit target)
+	protected virtual bool AutomaticMiss(Unit target)
 	{
 		if (target == null)
 			return false;
@@ -73,7 +73,7 @@ public abstract class HitRate : MonoBehaviour
 		return exc.toggle;
 	}
 
-	protected virtual int AdjustForStatusEffects (Unit target, int rate)
+	protected virtual int AdjustForStatusEffects(Unit target, int rate)
 	{
 		if (target == null)
 			return rate;
@@ -83,11 +83,14 @@ public abstract class HitRate : MonoBehaviour
 		return args.arg2;
 	}
 
-	protected virtual int Final (int evade)
+	protected virtual int Final(Unit attacker, Unit target, int hit, int proficiency, int evade)
 	{
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 		return 100 - evade;
 =======
+=======
+>>>>>>> Stashed changes
 		if (attacker == null || target == null)
 			return 0;
 
@@ -110,6 +113,9 @@ public abstract class HitRate : MonoBehaviour
 		default:
 			return 1f / 2f;
 		}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	}
 	#endregion

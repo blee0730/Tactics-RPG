@@ -8,8 +8,11 @@ public enum DisplaceDirectionMode
 	UserFacing,
 	TargetFacing,
 	TargetBack,
+<<<<<<< Updated upstream
 	TowardAreaCenter,
 	AwayFromAreaCenter,
+=======
+>>>>>>> Stashed changes
 	Absolute
 }
 
@@ -103,16 +106,20 @@ public class DisplaceAbilityEffect : BaseAbilityEffect
 				return false;
 			normal = GetOpposite(targetUnit.dir).GetNormal();
 			return true;
+<<<<<<< Updated upstream
 		case DisplaceDirectionMode.TowardAreaCenter:
 			return TryGetAreaCenterDirection(target, true, out normal);
 		case DisplaceDirectionMode.AwayFromAreaCenter:
 			return TryGetAreaCenterDirection(target, false, out normal);
+=======
+>>>>>>> Stashed changes
 		default: // AwayFromUser
 			normal = (target.pos - attacker.tile.pos).GetDirection().GetNormal();
 			return true;
 		}
 	}
 
+<<<<<<< Updated upstream
 	bool TryGetAreaCenterDirection(Tile target, bool towardCenter, out Point normal)
 	{
 		normal = new Point(0, 0);
@@ -127,6 +134,8 @@ public class DisplaceAbilityEffect : BaseAbilityEffect
 		return true;
 	}
 
+=======
+>>>>>>> Stashed changes
 	bool TryGetAbsoluteDirection (out Point normal)
 	{
 		normal = new Point(0, 0);

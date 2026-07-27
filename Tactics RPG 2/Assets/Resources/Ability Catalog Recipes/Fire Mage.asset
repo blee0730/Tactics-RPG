@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186acc0177b8d47aaaf1ace02c325494, type: 3}
   m_Name: Fire Mage
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   useManualUnlockList: 0
   initiallyUnlockedEntries: []
   useLoadout: 0
   startingEquippedEntries: []
+=======
+>>>>>>> Stashed changes
   categories:
   - name: Fire
     entries:
@@ -23,4 +26,8 @@ MonoBehaviour:
     - Firewall
     - Flame Arrow
     - Fireball
+<<<<<<< Updated upstream
     - Trailblaze
+=======
+    - Flame Walk
+>>>>>>> Stashed changes

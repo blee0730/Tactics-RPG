@@ -41,6 +41,7 @@ public class MoveTargetState : BattleState
 
 	protected override void OnCycleLayer (object sender, InfoEventArgs<int> e)
 	{
+<<<<<<< Updated upstream
 		if (statPanelController.IsDetailVisible)
 			return;
 
@@ -49,6 +50,9 @@ public class MoveTargetState : BattleState
 		// The Fire/confirm step below still only allows actual movement to tiles
 		// returned by Movement.GetTilesInRange.
 		CycleTileLayer(e.info);
+=======
+		CycleTileLayer(e.info, tiles);
+>>>>>>> Stashed changes
 		RefreshPrimaryStatPanel(pos);
 	}
 	

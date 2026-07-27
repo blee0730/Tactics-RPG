@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+<<<<<<< Updated upstream
 
 public class UntilOwnerNextTurnStatusCondition : StatusCondition
 {
@@ -27,4 +28,34 @@ public class UntilOwnerNextTurnStatusCondition : StatusCondition
         if (status != null)
             status.Remove(this);
     }
+=======
+using System.Collections;
+
+public class UntilOwnerNextTurnStatusCondition : StatusCondition
+{
+	Unit owner;
+	bool armed;
+
+	void OnEnable ()
+	{
+		owner = GetComponentInParent<Unit>();
+		armed = true;
+		if (owner != null)
+			this.AddObserver(OnOwnerTurnBegan, TurnOrderController.TurnBeganNotification, owner);
+	}
+
+	void OnDisable ()
+	{
+		if (owner != null)
+			this.RemoveObserver(OnOwnerTurnBegan, TurnOrderController.TurnBeganNotification, owner);
+	}
+
+	void OnOwnerTurnBegan (object sender, object args)
+	{
+		if (!armed)
+			return;
+
+		Remove();
+	}
+>>>>>>> Stashed changes
 }

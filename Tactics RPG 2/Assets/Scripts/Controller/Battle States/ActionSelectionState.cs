@@ -27,6 +27,7 @@ public class ActionSelectionState : BaseAbilityMenuState
 		GameObject container = catalog != null ? catalog.GetVisibleCategory(category) : null;
 		menuTitle = container != null ? container.name : "Action";
 
+<<<<<<< Updated upstream
 		if (menuOptions == null)
 			menuOptions = new List<string>();
 		else
@@ -41,17 +42,33 @@ public class ActionSelectionState : BaseAbilityMenuState
 			menuOptions.Add("No Abilities");
 			menuAbilities.Add(null);
 			menuTupleCounts.Add(1);
+=======
+		int count = container != null ? catalog.VisibleAbilityCount(container) : 0;
+		if (menuOptions == null)
+			menuOptions = new List<string>(Mathf.Max(count, 1));
+		else
+			menuOptions.Clear();
+
+		if (count == 0)
+		{
+			menuOptions.Add("No Abilities");
+>>>>>>> Stashed changes
 			abilityMenuPanelController.Show(menuTitle, menuOptions);
 			abilityMenuPanelController.SetLocked(0, true);
 			return;
 		}
 
+<<<<<<< Updated upstream
+=======
+		bool[] locks = new bool[count];
+>>>>>>> Stashed changes
 		for (int i = 0; i < count; ++i)
 		{
 			Ability ability = catalog.GetVisibleAbility(category, i);
 			if (ability == null)
 			{
 				menuOptions.Add("Missing Ability");
+<<<<<<< Updated upstream
 				menuAbilities.Add(null);
 				menuTupleCounts.Add(1);
 				continue;
@@ -71,6 +88,21 @@ public class ActionSelectionState : BaseAbilityMenuState
 			menuOptions.Add("No Abilities");
 			menuAbilities.Add(null);
 			menuTupleCounts.Add(1);
+=======
+				locks[i] = true;
+				continue;
+			}
+
+			AbilityMagicCost cost = ability.GetComponent<AbilityMagicCost>();
+			if (cost)
+				menuOptions.Add(string.Format("{0}: {1}", ability.name, cost.amount));
+			else
+				menuOptions.Add(ability.name);
+
+			// At this point the ability is visible/unlocked/equipped. A lock here
+			// now means normal combat restrictions like not enough MP, Silence, etc.
+			locks[i] = !ability.CanPerform();
+>>>>>>> Stashed changes
 		}
 
 		abilityMenuPanelController.Show(menuTitle, menuOptions);
@@ -115,6 +147,7 @@ public class ActionSelectionState : BaseAbilityMenuState
 
 	protected override void Confirm ()
 	{
+<<<<<<< Updated upstream
 		int selection = abilityMenuPanelController.selection;
 		turn.ability = selection >= 0 && selection < menuAbilities.Count ? menuAbilities[selection] : null;
 		int tupleCount = selection >= 0 && selection < menuTupleCounts.Count ? menuTupleCounts[selection] : 1;
@@ -129,6 +162,12 @@ public class ActionSelectionState : BaseAbilityMenuState
 			return;
 		}
 
+=======
+		turn.ability = catalog != null ? catalog.GetVisibleAbility(category, abilityMenuPanelController.selection) : null;
+		if (turn.ability == null || !turn.ability.CanPerform())
+			return;
+
+>>>>>>> Stashed changes
 		owner.ChangeState<AbilityTargetState>();
 	}
 

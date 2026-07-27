@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186acc0177b8d47aaaf1ace02c325494, type: 3}
   m_Name: Dark Mage
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   useManualUnlockList: 0
   initiallyUnlockedEntries: []
   useLoadout: 0
@@ -23,4 +24,13 @@ MonoBehaviour:
     - Shadow Shroud
     - Shadow Sphere
     - Soul Drain
+=======
+  categories:
+  - name: Dark
+    entries:
+    - Darkness
+    - Shadow Shroud
+    - Dark Orb
+    - Suck Lifeforce
+>>>>>>> Stashed changes
     - Shadow Warriors

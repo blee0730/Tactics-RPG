@@ -7,16 +7,22 @@ public class AbilityTargetState : BattleState
 	List<Tile> tiles;
 	AbilityRange ar;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 	AbilityArea aa;
 	PathAbilityArea pathArea;
 	TerraformAbilityArea terraformArea;
 >>>>>>> Stashed changes
+=======
+	AbilityArea aa;
+	PathAbilityArea pathArea;
+>>>>>>> Stashed changes
 	
-	public override void Enter ()
+	public override void Enter()
 	{
-		base.Enter ();
+		base.Enter();
 		ar = turn.ability.GetComponent<AbilityRange>();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 		SelectTiles ();
 =======
@@ -28,6 +34,25 @@ public class AbilityTargetState : BattleState
 >>>>>>> Stashed changes
 		statPanelController.ShowPrimary(turn.actor.gameObject);
 		RefreshDirectionalTargetSelection();
+=======
+		aa = turn.ability.GetComponent<AbilityArea>();
+		if (aa.tiles == null)
+			aa.tiles = new List<Tile>();
+		aa.tiles.Clear();
+		aa.counter = aa.count;
+		pathArea = aa as PathAbilityArea;
+
+		statPanelController.ShowPrimary(turn.actor.gameObject);
+
+		if (pathArea != null)
+			BeginPathTargeting();
+		else
+		{
+			SelectTiles();
+			RefreshDirectionalTargetSelection();
+		}
+
+>>>>>>> Stashed changes
 		if (driver.Current == Drivers.Computer)
 			StartCoroutine(ComputerHighlightTarget());
 	}
@@ -35,16 +60,23 @@ public class AbilityTargetState : BattleState
 	public override void Exit ()
 	{
 		base.Exit ();
-		board.DeSelectTiles(tiles);
+		if (tiles != null)
+			board.DeSelectTiles(tiles);
 		statPanelController.HidePrimary();
 		statPanelController.HideSecondary();
 	}
 	
 	protected override void OnMove (object sender, InfoEventArgs<Point> e)
 	{
+<<<<<<< Updated upstream
 		if (pathArea != null || terraformArea != null)
 		{
 			SelectTile(e.info + pos, tiles);
+=======
+		if (pathArea != null)
+		{
+			SelectTile(e.info + pos);
+>>>>>>> Stashed changes
 			RefreshSecondaryStatPanel(pos);
 			return;
 		}
@@ -62,17 +94,26 @@ public class AbilityTargetState : BattleState
 
 	protected override void OnCycleLayer (object sender, InfoEventArgs<int> e)
 	{
+<<<<<<< Updated upstream
 		if (ar != null && ar.directionOriented)
 			return;
 
 		CycleTileLayer(e.info, tiles);
 		RefreshSecondaryStatPanel(pos);
+=======
+		if (pathArea != null)
+		{
+			CycleTileLayer(e.info, tiles);
+			RefreshSecondaryStatPanel(pos);
+		}
+>>>>>>> Stashed changes
 	}
 	
 	protected override void OnFire (object sender, InfoEventArgs<int> e)
 	{
 		if (pathArea != null)
 		{
+<<<<<<< Updated upstream
 			HandlePathFire(e.info);
 			return;
 		}
@@ -80,17 +121,41 @@ public class AbilityTargetState : BattleState
 		if (terraformArea != null)
 		{
 			HandleTerraformFire(e.info);
+=======
+			OnPathFire(e.info);
+>>>>>>> Stashed changes
 			return;
 		}
 
 		if (e.info == 0)
 		{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 			if (ar.directionOriented || tiles.Contains(board.GetTile(pos)))
 				owner.ChangeState<ConfirmAbilityTargetState>();
+=======
+			Tile selectedTile = ar.directionOriented ? GetDirectionalTargetTile() : owner.currentTile;
+			if (selectedTile == null)
+				return;
+
+			bool validSelection = ar.directionOriented || tiles.Contains(selectedTile);
+			if (aa.counter >= 1 && validSelection)
+			{
+				if (aa.tiles == null)
+					aa.tiles = new List<Tile>();
+
+				pos = selectedTile.pos;
+				owner.selectedTile = selectedTile;
+				aa.counter--;
+				aa.tiles.Add(selectedTile);
+				if (aa.counter == 0)
+					owner.ChangeState<ConfirmAbilityTargetState>();
+			}
+>>>>>>> Stashed changes
 		}
 		else
 		{
+			aa.counter = aa.count;
 			owner.ChangeState<CategorySelectionState>();
 =======
 			Tile selectedTile = ar.directionOriented ? GetDirectionalTargetTile() : owner.currentTile;
@@ -217,7 +282,8 @@ public class AbilityTargetState : BattleState
 		Directions dir = p.GetDirection();
 		if (turn.actor.dir != dir)
 		{
-			board.DeSelectTiles(tiles);
+			if (tiles != null)
+				board.DeSelectTiles(tiles);
 			turn.actor.dir = dir;
 			turn.actor.Match();
 			SelectTiles ();
@@ -227,6 +293,7 @@ public class AbilityTargetState : BattleState
 	
 	void SelectTiles ()
 	{
+<<<<<<< Updated upstream
 		if (pathArea != null)
 			tiles = pathArea.GetSelectableTiles(board, turn.actor);
 		else if (terraformArea != null)
@@ -238,6 +305,12 @@ public class AbilityTargetState : BattleState
 
 		if (tiles == null)
 			tiles = new List<Tile>();
+=======
+		tiles = ar.GetTilesInRange(board);
+		if (tiles == null)
+			tiles = new List<Tile>();
+		tiles.RemoveAll(t => t == null);
+>>>>>>> Stashed changes
 		board.SelectTiles(tiles);
 	}
 
@@ -272,8 +345,84 @@ public class AbilityTargetState : BattleState
 		return null;
 	}
 
+<<<<<<< Updated upstream
+=======
+	void BeginPathTargeting ()
+	{
+		pathArea.Begin(turn.actor, board);
+		SelectTile(turn.actor.tile);
+		RefreshPathSelectionTiles();
+		statPanelController.HideSecondary();
+	}
+
+	void OnPathFire (int button)
+	{
+		if (button == 0)
+		{
+			Tile selected = owner.currentTile;
+			if (pathArea.TryAddStep(selected))
+			{
+				RefreshPathSelectionTiles();
+				RefreshSecondaryStatPanel(pos);
+			}
+		}
+		else if (button == 1)
+		{
+			if (!pathArea.RemoveLastStep())
+			{
+				pathArea.ResetPath();
+				owner.ChangeState<CategorySelectionState>();
+				return;
+			}
+			RefreshPathSelectionTiles();
+		}
+		else if (button == 2)
+		{
+			FinishPathIfValid();
+		}
+	}
+
+	void RefreshPathSelectionTiles ()
+	{
+		if (tiles != null)
+			board.DeSelectTiles(tiles);
+
+		tiles = pathArea.GetSelectableNextSteps(board);
+		if (tiles == null)
+			tiles = new List<Tile>();
+		tiles.RemoveAll(t => t == null);
+		board.SelectTiles(tiles);
+	}
+
+	void FinishPathIfValid ()
+	{
+		if (!pathArea.HasValidPath())
+			return;
+
+		if (aa.tiles == null)
+			aa.tiles = new List<Tile>();
+		aa.tiles.Clear();
+		aa.tiles.AddRange(pathArea.SelectedPath);
+		Tile end = pathArea.Endpoint;
+		if (end != null)
+			SelectTile(end);
+		owner.ChangeState<ConfirmAbilityTargetState>();
+	}
+
+>>>>>>> Stashed changes
 	IEnumerator ComputerHighlightTarget ()
 	{
+		if (pathArea != null)
+		{
+			// AI cannot manually draw paths yet. Use the planned fire location as a one-tile path.
+			Tile planned = board.GetTile(turn.plan.fireLocation);
+			if (planned != null)
+				pathArea.TryAddStep(planned);
+			yield return new WaitForSeconds(0.5f);
+			FinishPathIfValid();
+			yield break;
+		}
+
 		if (ar.directionOriented)
 		{
 			ChangeDirection(turn.plan.attackDirection.GetNormal());

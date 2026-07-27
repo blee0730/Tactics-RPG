@@ -121,7 +121,7 @@ public class BoardCreator : MonoBehaviour
 	public void UpdateMarker ()
 	{
 		Tile t = topTiles.ContainsKey(pos) ? topTiles[pos] : null;
-		marker.localPosition = t != null ? t.center : new Vector3(pos.x, 0, pos.y);
+		marker.localPosition = t != null ? t.center : new Vector3(pos.x, 0.25f, pos.y);
 	}
 
 	public void Clear ()

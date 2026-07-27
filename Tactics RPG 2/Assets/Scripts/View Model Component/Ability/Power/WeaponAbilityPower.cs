@@ -3,9 +3,9 @@ using System.Collections;
 
 public class WeaponAbilityPower : BaseAbilityPower 
 {
-	protected override int GetBaseAttack ()
+	protected override int GetBaseAttack()
 	{
-		return GetComponentInParent<Stats>()[StatTypes.ATK];
+		return GetComponentInParent<Stats>()[StatTypes.STR];
 	}
 
 	protected override int GetBaseDefense (Unit target)
@@ -28,7 +28,7 @@ public class WeaponAbilityPower : BaseAbilityPower
 
 		for (int i = 0; i < features.Length; ++i)
 		{
-			if (features[i].type == StatTypes.ATK)
+			if (features[i].type == StatTypes.STR)
 				power += features[i].amount;
 		}
 		
@@ -40,7 +40,7 @@ public class WeaponAbilityPower : BaseAbilityPower
 		Job job = GetComponentInParent<Job>();
 		for (int i = 0; i < Job.statOrder.Length; ++i)
 		{
-			if (Job.statOrder[i] == StatTypes.ATK)
+			if (Job.statOrder[i] == StatTypes.STR)
 				return job.baseStats[i];
 		}
 		return 0;

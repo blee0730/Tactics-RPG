@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+<<<<<<< Updated upstream
 
 public class PathTileHazardAbilityEffect : SpawnHazardZoneAbilityEffect
 {
@@ -12,4 +13,21 @@ public class PathTileHazardAbilityEffect : SpawnHazardZoneAbilityEffect
             base.OnApply(area.tiles[i]);
         return 0;
     }
+=======
+using System.Collections;
+
+public class PathTileHazardAbilityEffect : TileHazardAbilityEffect
+{
+	protected override int OnApply (Tile target)
+	{
+		PathAbilityArea pathArea = GetComponentInParent<PathAbilityArea>();
+		if (pathArea == null)
+			return base.OnApply(target);
+
+		int applied = 0;
+		for (int i = 0; i < pathArea.SelectedPath.Count; ++i)
+			applied += base.OnApply(pathArea.SelectedPath[i]);
+		return applied;
+	}
+>>>>>>> Stashed changes
 }
