@@ -14,11 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Rein
   statusPortrait: {fileID: 21300000, guid: 58b4c2389e54e7745b017b15a4bd1a1c, type: 3}
-<<<<<<< Updated upstream
   dialogueCharacterName: Rein
-=======
-  dialogueCharacterName: 
->>>>>>> Stashed changes
   model: Rein
   job: Master of None
   attack: Common/Attack

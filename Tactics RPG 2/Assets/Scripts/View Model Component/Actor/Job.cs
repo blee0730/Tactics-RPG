@@ -10,14 +10,6 @@ public class Job : MonoBehaviour
 		StatTypes.MMP,
 		StatTypes.STR,
 		StatTypes.DEF,
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		StatTypes.MAT,
-		StatTypes.MDF,
-		StatTypes.SPD
-=======
-=======
->>>>>>> Stashed changes
 		StatTypes.MAG,
 		StatTypes.RES,
 		StatTypes.SPD,
@@ -26,10 +18,6 @@ public class Job : MonoBehaviour
 		StatTypes.MOV,
 		StatTypes.JMP,
 		StatTypes.FRT
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	};
 
 	public int[] baseStats = new int[ statOrder.Length ];

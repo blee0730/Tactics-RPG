@@ -16,7 +16,6 @@ public class AutoStatusController : MonoBehaviour
 	void OnHPDidChangeNotification (object sender, object args)
 	{
 		Stats stats = sender as Stats;
-<<<<<<< Updated upstream
 		if (stats == null)
 			return;
 
@@ -43,20 +42,5 @@ public class AutoStatusController : MonoBehaviour
 
 		StatComparisonCondition condition = status.Add<KnockOutStatusEffect, StatComparisonCondition>();
 		condition.Init(StatTypes.HP, defeatThreshold, condition.LessThanOrEqualTo);
-=======
-		if (stats[StatTypes.HP] == 0)
-		{
-			Status status = stats.GetComponentInChildren<Status>();
-			if (status == null)
-				return;
-
-			AutoReviveStatusEffect autoRevive = status.GetComponentInChildren<AutoReviveStatusEffect>();
-			if (autoRevive != null && autoRevive.TryRevive(stats))
-				return;
-
-			StatComparisonCondition c = status.Add<KnockOutStatusEffect, StatComparisonCondition>();
-			c.Init(StatTypes.HP, 0, c.EqualTo);
-		}
->>>>>>> Stashed changes
 	}
 }

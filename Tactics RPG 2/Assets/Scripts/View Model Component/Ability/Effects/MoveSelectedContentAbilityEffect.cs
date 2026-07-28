@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-<<<<<<< Updated upstream
 
 public class MoveSelectedContentAbilityEffect : BaseAbilityEffect
 {
@@ -41,45 +40,4 @@ public class MoveSelectedContentAbilityEffect : BaseAbilityEffect
         lastFrame = Time.frameCount;
         return 0;
     }
-=======
-using System.Collections;
-
-public class MoveSelectedContentAbilityEffect : BaseAbilityEffect
-{
-	public bool requireEmptyDestination = true;
-
-	public override int Predict (Tile target)
-	{
-		return 0;
-	}
-
-	protected override int OnApply (Tile target)
-	{
-		AbilityArea area = GetComponentInParent<AbilityArea>();
-		if (area == null || area.tiles == null || area.tiles.Count < 2)
-			return 0;
-
-		Tile source = area.tiles[0];
-		Tile destination = area.tiles[1];
-		if (source == null || destination == null || source.content == null)
-			return 0;
-		if (requireEmptyDestination && destination.content != null)
-			return 0;
-
-		Unit unit = source.content.GetComponent<Unit>();
-		if (unit != null)
-		{
-			unit.Place(destination);
-			unit.Match();
-		}
-		else
-		{
-			GameObject content = source.content;
-			source.content = null;
-			destination.content = content;
-			content.transform.localPosition = destination.center;
-		}
-		return 0;
-	}
->>>>>>> Stashed changes
 }

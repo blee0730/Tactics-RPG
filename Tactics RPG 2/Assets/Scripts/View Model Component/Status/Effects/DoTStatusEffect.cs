@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DoTStatusEffect : StatusEffect 
 {
+	public const string TickNotification = "DoTStatusEffect.TickNotification";
+
 	public float percentOfMaxHP = 0.1f;
 	public int minimumDamage = 1;
 	public bool canKnockOut = true;
@@ -13,29 +15,37 @@ public class DoTStatusEffect : StatusEffect
 	{
 		owner = GetComponentInParent<Unit>();
 		if (owner)
-			this.AddObserver(OnNewTurn, TurnOrderController.TurnBeganNotification, owner);
+			this.AddObserver(OnTurnBegan, TurnOrderController.TurnBeganNotification, owner);
 	}
 
 	void OnDisable ()
 	{
 		if (owner)
-			this.RemoveObserver(OnNewTurn, TurnOrderController.TurnBeganNotification, owner);
+			this.RemoveObserver(OnTurnBegan, TurnOrderController.TurnBeganNotification, owner);
 	}
 
-	void OnNewTurn (object sender, object args)
+	void OnTurnBegan (object sender, object args)
 	{
-		Stats s = GetComponentInParent<Stats>();
-		if (s == null)
+		Stats stats = GetComponentInParent<Stats>();
+		if (stats == null)
 			return;
 
-		int currentHP = s[StatTypes.HP];
-		if (currentHP <= 0)
+		Health health = stats.GetComponent<Health>();
+		int currentHP = stats[StatTypes.HP];
+		int defeatThreshold = health != null ? health.MinHP : 0;
+		if (currentHP <= defeatThreshold)
 			return;
 
-		int maxHP = s[StatTypes.MHP];
-		int reduce = Mathf.Max(minimumDamage, Mathf.FloorToInt(maxHP * percentOfMaxHP));
-		int floor = canKnockOut ? 0 : 1;
-		int nextHP = Mathf.Max(floor, currentHP - reduce);
-		s.SetValue(StatTypes.HP, nextHP, false);
+		int maxHP = stats[StatTypes.MHP];
+		int damage = Mathf.Max(minimumDamage, Mathf.FloorToInt(maxHP * percentOfMaxHP));
+		int floor = canKnockOut ? defeatThreshold : Mathf.Max(defeatThreshold + 1, 1);
+		int nextHP = Mathf.Max(floor, currentHP - damage);
+
+		if (health != null)
+			health.HP = nextHP;
+		else
+			stats[StatTypes.HP] = nextHP;
+
+		this.PostNotification(TickNotification, damage);
 	}
 }

@@ -1,13 +1,8 @@
 using UnityEngine;
-<<<<<<< Updated upstream
-=======
-using UnityEngine.Serialization;
->>>>>>> Stashed changes
 using System.Collections;
 
 public class AssassinateAbilityEffect : DamageAbilityEffect
 {
-<<<<<<< Updated upstream
     public int baseInstantKillChance = 25;
     public int skillBonusPercent = 2;
     public int defenderSkillPenaltyPercent = 2;
@@ -76,70 +71,4 @@ public class AssassinateAbilityEffect : DamageAbilityEffect
 
         return Mathf.Clamp(chance, minInstantKillChance, maxInstantKillChance);
     }
-=======
-	[Range(0, 100)] public int baseInstantKillChance = 25;
-	public int skillBonusPercent = 2;
-	[FormerlySerializedAs("fortitudePenaltyPercent")]
-	public int defenderSkillPenaltyPercent = 2;
-	[Range(0, 100)] public int minInstantKillChance = 5;
-	[Range(0, 100)] public int maxInstantKillChance = 75;
-	public float failureDamageMultiplier = 1.5f;
-
-	public override int Predict (Tile target)
-	{
-		if (target == null || target.content == null)
-			return 0;
-
-		Unit victim = target.content.GetComponent<Unit>();
-		Stats victimStats = victim != null ? victim.GetComponent<Stats>() : null;
-		if (victimStats == null)
-			return base.Predict(target);
-
-		int chance = CalculateInstantKillChance(target);
-		if (chance >= 50)
-			return -victimStats[StatTypes.HP];
-		return Mathf.RoundToInt(base.Predict(target) * failureDamageMultiplier);
-	}
-
-	protected override int OnApply (Tile target)
-	{
-		if (target == null || target.content == null)
-			return 0;
-
-		Unit victim = target.content.GetComponent<Unit>();
-		Stats victimStats = victim != null ? victim.GetComponent<Stats>() : null;
-		if (victimStats == null)
-			return 0;
-
-		int chance = CalculateInstantKillChance(target);
-		if (UnityEngine.Random.Range(0, 100) < chance)
-		{
-			int currentHP = victimStats[StatTypes.HP];
-			victimStats[StatTypes.HP] = 0;
-			return -currentHP;
-		}
-
-		int value = base.OnApply(target);
-		if (value < 0 && !Mathf.Approximately(failureDamageMultiplier, 1f))
-		{
-			int bonusDamage = Mathf.FloorToInt(Mathf.Abs(value) * (failureDamageMultiplier - 1f));
-			victimStats[StatTypes.HP] -= bonusDamage;
-			value -= bonusDamage;
-		}
-		return value;
-	}
-
-	int CalculateInstantKillChance (Tile target)
-	{
-		Unit user = GetComponentInParent<Unit>();
-		Unit victim = target != null && target.content != null ? target.content.GetComponent<Unit>() : null;
-		Stats userStats = user != null ? user.GetComponent<Stats>() : null;
-		Stats victimStats = victim != null ? victim.GetComponent<Stats>() : null;
-
-		int userSkill = userStats != null ? userStats[StatTypes.SKL] : 0;
-		int victimSkill = victimStats != null ? victimStats[StatTypes.SKL] : 0;
-		int chance = baseInstantKillChance + (userSkill * skillBonusPercent) - (victimSkill * defenderSkillPenaltyPercent);
-		return Mathf.Clamp(chance, minInstantKillChance, maxInstantKillChance);
-	}
->>>>>>> Stashed changes
 }

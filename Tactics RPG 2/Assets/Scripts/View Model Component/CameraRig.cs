@@ -9,13 +9,10 @@ public class CameraRig : MonoBehaviour
 	public Transform follow;
 	Transform _transform;
 	public Transform pitch;
-<<<<<<< Updated upstream
 
 	[Header("Runtime Locks")]
 	[Tooltip("When true, the camera rig ignores rotation, zoom, and follow movement. Used by blocking UI such as the full unit status panel.")]
 	public bool movementLocked;
-=======
->>>>>>> Stashed changes
 	
 	private float currentX = 35.264f;
 	private float currentY = 0.0f;
@@ -27,6 +24,9 @@ public class CameraRig : MonoBehaviour
 
 	void Update()
 	{
+		if (movementLocked)
+			return;
+
 		currentX += Input.mouseScrollDelta.y * sensitivity * Time.deltaTime;
 		currentY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 		currentX = Mathf.Clamp(currentX, XMin, XMax);

@@ -1,7 +1,4 @@
 fileFormatVersion: 2
-<<<<<<< Updated upstream
-guid: a51cb7c1793c69f4fad10e1a123f92f3
-=======
 guid: 89bf7c88c38dc77488fd64c46df6f50f
 timeCreated: 1446435567
 licenseType: Pro
@@ -9,4 +6,3 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
->>>>>>> Stashed changes

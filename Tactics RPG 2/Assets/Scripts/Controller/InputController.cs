@@ -43,15 +43,7 @@ public class InputController : MonoBehaviour
 {
 	public static event EventHandler<InfoEventArgs<Point>> moveEvent;
 	public static event EventHandler<InfoEventArgs<int>> fireEvent;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
 	public static event EventHandler<InfoEventArgs<int>> layerCycleEvent;
->>>>>>> Stashed changes
-=======
-	public static event EventHandler<InfoEventArgs<int>> layerCycleEvent;
->>>>>>> Stashed changes
 	Repeater _hor = new Repeater("Horizontal");
 	Repeater _ver = new Repeater("Vertical");
 	string[] _buttons = new string[] {"Fire1", "Fire2", "Fire3"};
@@ -70,11 +62,6 @@ public class InputController : MonoBehaviour
 		int y = _ver.Update();
 		if (x != 0 || y != 0)
 		{
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-			if (moveEvent != null)
-				moveEvent(this, new InfoEventArgs<Point>(new Point(x, y)));
-=======
 			RaiseMoveEvent(new Point(x, y));
 		}
 
@@ -83,16 +70,10 @@ public class InputController : MonoBehaviour
 		bool shiftUp = Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift);
 		bool altUp = Input.GetKeyUp(KeyCode.LeftAlt) || Input.GetKeyUp(KeyCode.RightAlt);
 
-=======
-			RaiseMoveEvent(new Point(x, y));
-		}
-
->>>>>>> Stashed changes
 		if (layerCycleEvent != null)
 		{
 			// Shift cycles to the next/higher selectable splitTop/topTile layer when possible.
 			// Alt cycles to the previous/lower layer. On a two-layer stack, either key works like a toggle.
-<<<<<<< Updated upstream
 			if (shiftDown)
 			{
 				_consumeShiftReleaseAsFire3 = true;
@@ -103,13 +84,6 @@ public class InputController : MonoBehaviour
 				_consumeAltReleaseAsFire2 = true;
 				layerCycleEvent(this, new InfoEventArgs<int>(-1));
 			}
->>>>>>> Stashed changes
-=======
-			if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
-				layerCycleEvent(this, new InfoEventArgs<int>(1));
-			else if (Input.GetKeyDown(KeyCode.LeftAlt) || Input.GetKeyDown(KeyCode.RightAlt))
-				layerCycleEvent(this, new InfoEventArgs<int>(-1));
->>>>>>> Stashed changes
 		}
 
 		for (int i = 0; i < 3; ++i)
@@ -143,29 +117,6 @@ public class InputController : MonoBehaviour
 			return true;
 
 		return false;
-	}
-
-	void RaiseMoveEvent (Point raw)
-	{
-		if (moveEvent == null)
-			return;
-
-		moveEvent(this, new InfoEventArgs<Point>(CameraRelativeDirection(raw)));
-	}
-
-	Point CameraRelativeDirection (Point raw)
-	{
-		if (cameraRig == null)
-			return raw;
-
-		float y = cameraRig.transform.rotation.eulerAngles.y;
-		if (y >= 270 && y <= 360)
-			return raw;
-		if (y >= 0 && y < 90)
-			return new Point(raw.y, -raw.x);
-		if (y >= 90 && y < 180)
-			return new Point(-raw.x, -raw.y);
-		return new Point(-raw.y, raw.x);
 	}
 
 	void RaiseMoveEvent (Point raw)

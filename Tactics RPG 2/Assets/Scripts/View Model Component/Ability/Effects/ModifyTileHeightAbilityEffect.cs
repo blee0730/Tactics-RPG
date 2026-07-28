@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-<<<<<<< Updated upstream
 
 public enum TileHeightChangeMode
 {
@@ -7,20 +6,10 @@ public enum TileHeightChangeMode
     Lower,
     Set,
     ToggleRaiseLower
-=======
-using System.Collections;
-
-public enum TileHeightChangeMode
-{
-	Raise,
-	Lower,
-	Set
->>>>>>> Stashed changes
 }
 
 public class ModifyTileHeightAbilityEffect : BaseAbilityEffect
 {
-<<<<<<< Updated upstream
     public TileHeightChangeMode changeMode = TileHeightChangeMode.Raise;
     public float amount = 0.25f;
     public float setHeight = 0f;
@@ -63,40 +52,4 @@ public class ModifyTileHeightAbilityEffect : BaseAbilityEffect
         board.SetTileHeight(target, newHeight);
         return 0;
     }
-=======
-	public TileHeightChangeMode changeMode = TileHeightChangeMode.Raise;
-	public int steps = 1;
-	public float setHeight = 0f;
-	public bool requireEmptyTile = true;
-
-	public override int Predict (Tile target)
-	{
-		return 0;
-	}
-
-	protected override int OnApply (Tile target)
-	{
-		if (target == null)
-			return 0;
-		if (requireEmptyTile && target.content != null)
-			return 0;
-
-		switch (changeMode)
-		{
-		case TileHeightChangeMode.Lower:
-			for (int i = 0; i < steps; ++i)
-				target.Shrink();
-			break;
-		case TileHeightChangeMode.Set:
-			target.height = setHeight;
-			target.Load(target.pos, target.height);
-			break;
-		default:
-			for (int i = 0; i < steps; ++i)
-				target.Grow();
-			break;
-		}
-		return 0;
-	}
->>>>>>> Stashed changes
 }

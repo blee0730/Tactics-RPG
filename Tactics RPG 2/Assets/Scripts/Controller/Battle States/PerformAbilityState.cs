@@ -3,20 +3,6 @@ using System.Collections;
 
 public class PerformAbilityState : BattleState
 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	public override void Enter ()
-=======
-	public override void Enter()
->>>>>>> Stashed changes
-	{
-		base.Enter();
-
-		turn.hasUnitActed = true;
-		if (turn.hasUnitMoved)
-			turn.lockMove = true;
-<<<<<<< Updated upstream
-=======
 	public override void Enter()
 	{
 		base.Enter();
@@ -28,11 +14,6 @@ public class PerformAbilityState : BattleState
 		if (turn.hasUnitMoved)
 			turn.lockMove = true;
 
->>>>>>> Stashed changes
-=======
-
-
->>>>>>> Stashed changes
 		StartCoroutine(Animate());
 	}
 	
@@ -40,11 +21,6 @@ public class PerformAbilityState : BattleState
 	{
 		// TODO play animations, etc
 		yield return null;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		ApplyAbility();
-		
-=======
 
 		if (turn.ability != null)
 		{
@@ -52,13 +28,6 @@ public class PerformAbilityState : BattleState
 			TupleAbilityModifier.ClearActive(turn.ability);
 		}
 
->>>>>>> Stashed changes
-=======
-
-		if (turn.ability != null)
-			turn.ability.Perform(turn.targets);
-
->>>>>>> Stashed changes
 		if (IsBattleOver())
 			owner.ChangeState<CutSceneState>();
 		else if (!UnitHasControl())
@@ -68,15 +37,6 @@ public class PerformAbilityState : BattleState
 		else
 			owner.ChangeState<CommandSelectionState>();
 	}
-<<<<<<< Updated upstream
-	
-<<<<<<< Updated upstream
-	void ApplyAbility ()
-	{
-		turn.ability.Perform(turn.targets);
-	}
-=======
->>>>>>> Stashed changes
 	
 	bool UnitHasControl ()
 	{
@@ -91,10 +51,5 @@ public class PerformAbilityState : BattleState
 			return false;
 
 		return true;
-=======
-	bool UnitHasControl ()
-	{
-		return turn.actor != null && turn.actor.GetComponentInChildren<KnockOutStatusEffect>() == null;
->>>>>>> Stashed changes
 	}
 }

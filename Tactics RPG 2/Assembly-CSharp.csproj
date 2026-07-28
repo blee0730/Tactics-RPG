@@ -79,13 +79,8 @@
     <Compile Include="Assets\Scripts\VN Integration\Core\Characters\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\Extensions\CMD_DatabaseExtension_TacticsRPG.cs" />
     <Compile Include="Assets\Scripts\View Model Component\CameraRig.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="Assets\Scripts\View Model Component\Status\Effects\PoisonStatusEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\BackAbilityArea.cs" />
     <Compile Include="Assets\Scripts\Testing\AbilityTestInfiniteMana.cs" />
-=======
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\BackAbilityArea.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Actor\Alliance.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Power\BaseAbilityPower.cs" />
     <Compile Include="Assets\Scripts\Extensions\FacingsExtensions.cs" />
@@ -103,11 +98,9 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\DrainDamageAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\TauntAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ApplyCounterattackAbilityEffect.cs" />
+    <Compile Include="Assets\Scripts\View Model Component\Status\Tile Effects\PortalTileEffect.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\CensorManager.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\Controller\UI\TurnOrderPanelController.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\Characters\CharacterTypes\Character_Text.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\AutoReviveAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ManaRestoreAbilityEffect.cs" />
@@ -116,39 +109,24 @@
     <Compile Include="Assets\Scripts\VN Integration\TacticsVariableSetup.cs" />
     <Compile Include="Assets\Scripts\VN Integration\TacticsSaveData.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Extensions\CoroutineWrapper.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\STypeHitRate.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\HitRate.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\CategorySelectionState.cs" />
     <Compile Include="Assets\Scripts\VN Integration\BattleHistoryManager.cs" />
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\PortalTileEffect.cs" />
     <Compile Include="Assets\Scripts\Enums\AbilityDamageTypes.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\SpawnHazardZoneAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\Controller\AutoStatusController.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\RewindTimeAbilityEffect.cs" />
+    <Compile Include="Assets\Scripts\View Model Component\Ability\Range\IncreasingConeAbilityRange.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\PathAbilityArea.cs" />
     <Compile Include="Assets\Scripts\Controller\AnalyzeSystemController.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\VN System\VNDatabaseLinkSetup.cs" />
     <Compile Include="Assets\Scripts\Testing\AbilityTestLabMode.cs" />
-=======
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\HitRate.cs" />
-    <Compile Include="Assets\Scripts\Controller\Battle States\CategorySelectionState.cs" />
-    <Compile Include="Assets\Scripts\VN Integration\BattleHistoryManager.cs" />
-    <Compile Include="Assets\Scripts\Enums\AbilityDamageTypes.cs" />
-    <Compile Include="Assets\Scripts\Controller\AutoStatusController.cs" />
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Range\IncreasingConeAbilityRange.cs" />
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\PathAbilityArea.cs" />
-    <Compile Include="Assets\Scripts\VN Integration\Core\VN System\VNDatabaseLinkSetup.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\Controller\AbilityMenuPanelController.cs" />
     <Compile Include="Assets\Scripts\Controller\ConversationController.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\Data Containers\DL_DIALOGUE_DATA.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\SelectUnitState.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\CureAbilityEffect.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Assets\Scripts\View Model Component\Status\Tile Effects\Ice.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\Controller\ExperienceManager.cs" />
     <Compile Include="Assets\Scripts\Common\Animation\EasingEquations.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\CommandProcess.cs" />
@@ -168,15 +146,10 @@
     <Compile Include="Assets\Scripts\VN Integration\Core\ScriptableObjects\CharacterConfigSO.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Feature Panels\InputPanel.cs" />
     <Compile Include="Assets\Scripts\Controller\StatPanelController.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\Testing\AbilityTestLabVictoryCondition.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\Extensions\CMD_DatabaseExtension_GraphicPanels.cs" />
     <Compile Include="Assets\Scripts\Enums\Facings.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\PastInjuriesAbilityEffect.cs" />
-=======
-    <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\Extensions\CMD_DatabaseExtension_GraphicPanels.cs" />
-    <Compile Include="Assets\Scripts\Enums\Facings.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\History\HistoryCache.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\History\Data Containers\CharacterData.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\TileTypeHitRate.cs" />
@@ -199,10 +172,7 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effect Target\AbsorbDamageAbilityEffectTarget.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\DamageApplicationInfo.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\WallAbilityArea.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\TerraformAbilityArea.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\FullAbilityArea.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\Extensions\CMD_DatabaseExtension_Characters.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\StatusTypeHitRate.cs" />
@@ -213,10 +183,7 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ApplyRegenAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ReviveAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\Extensions\DirectionsExtensions.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\LastDamageMemory.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Extensions\ColorExtensions.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\ActionLockStatusEffect.cs" />
     <Compile Include="Assets\Scripts\Common\Animation\TransformPositionTweener.cs" />
@@ -232,10 +199,7 @@
     <Compile Include="Assets\Scripts\View Model Component\Movement\Movement.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\DisplaceAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\UntargetableStatusEffect.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\DoTStatusEffect.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\TextArchitect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effect Target\AbilityEffectTarget.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\ScriptableObjects\DialogueSystemConfigurationSO.cs" />
@@ -246,19 +210,13 @@
     <Compile Include="Assets\Scripts\VN Integration\Core\History\Data Containers\AudioTrackData.cs" />
     <Compile Include="Assets\Scripts\Exceptions\Modifiers\MultValueModifier.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Item\Merchandise.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Tuple\TupleAbilityModifier.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Actor\UnitProfile.cs" />
     <Compile Include="Assets\Scripts\VN Integration\SupportConversationCommand.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\UnitAbilityArea.cs" />
     <Compile Include="Assets\Scripts\EventArgs\InfoEventArgs.cs" />
     <Compile Include="Assets\Scripts\Common\Animation\AudioSourceVolumeTweener.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\BuffStatusEffect.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\Menus\Pages\ConfigMenu.cs" />
     <Compile Include="Assets\Scripts\Controller\InputController.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Conditions\AutoReviveStatusCondition.cs" />
@@ -306,10 +264,7 @@
     <Compile Include="Assets\Scripts\Controller\Battle States\BattleState.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Characters\CharacterTypes\Character_Model3D.cs" />
     <Compile Include="Assets\Scripts\View Model Component\AI\Ability Picker\BaseAbilityPicker.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\SpawnWallTileAbilityEffect.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effect Target\AllyAbilityEffectTarget.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\MoveToTargetAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Features\Feature.cs" />
@@ -324,12 +279,10 @@
     <Compile Include="Assets\Scripts\View Model Component\Features\AddStatusFeature.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\Conversations\Conversation.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Status.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\Controller\UI\TurnOrderEntry.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\InstantiateAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Menus\Pages\SaveAndLoadPageNavigationBar.cs" />
+    <Compile Include="Assets\Scripts\View Model Component\Status\Tile Effects\HazardZoneTileEffect.cs" />
     <Compile Include="Assets\Scripts\Factory\AbilityCatalogRecipe.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Gallery\GalleryMenu.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\ActionSelectionState.cs" />
@@ -345,12 +298,9 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ModifyTileHeightAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ApplyDoTAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\History\Data Containers\DialogueData.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\DebuffStatusEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effect Target\TileAbilityEffectTarget.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Tile Effects\Trap.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\LineAbilityArea.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\AutoReader.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Actor\Driver.cs" />
@@ -365,17 +315,11 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\DamageInfo.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\Conversations\ConversationQueue.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\NameContainer.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Mastery\AbilityMasteryTracker.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\PerformAbilityState.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\EndFacingState.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\CommandManager.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Analyze\AnalyzePartialAbilityModifier.cs" />
-=======
-    <Compile Include="Assets\Scripts\Controller\Battle States\PerformAbilityState.cs" />
-    <Compile Include="Assets\Scripts\Controller\Battle States\EndFacingState.cs" />
-    <Compile Include="Assets\Scripts\VN Integration\Core\Commands\CommandManager.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\KnockbackAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\DialogueSystem.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ApplyTemporaryStatModifierAbilityEffect.cs" />
@@ -384,19 +328,12 @@
     <Compile Include="Assets\Scripts\Common\Animation\TransformAnimationExtensions.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\History\Data Containers\AudioSFXData.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\History\HistoryManager.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="Assets\Scripts\View Model Component\Status\Effects\SlowStatusEffect.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\TileHazardAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Area Of Effect\PiercingAbilityArea.cs" />
     <Compile Include="Assets\Scripts\Common\Notification Center\NotificationCenter.cs" />
     <Compile Include="Assets\Scripts\Enums\Directions.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Sprite Billboarding\DirectionalSpriteSet.cs" />
-<<<<<<< Updated upstream
-=======
     <Compile Include="Assets\Scripts\View Model Component\Ability\Range\SpinAbilityRange.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\Common\Animation\AudioSourceAnimationExtensions.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Sprite Billboarding\DirectionalBillboardSprite.cs" />
     <Compile Include="Assets\Scripts\Common\UI\Panel.cs" />
@@ -405,24 +342,17 @@
     <Compile Include="Assets\Scripts\Controller\GameObjectPoolController.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\CommandParameters.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\StatusEffect.cs" />
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Hit Rate\HazardZoneTileEffect.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\MoveTargetState.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\Extensions\CMD_DatabaseExtensionGeneral.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Actor\Stats.cs" />
     <Compile Include="Assets\Scripts\View Model Component\StatPanel.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\Controller\AbilityMasterySystemController.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\Dialogue\DialogueContinuePrompt.cs" />
     <Compile Include="Assets\Scripts\Common\Animation\RectTransformAnchorPositionTweener.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Audio\AudioChannel.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Menus\MainMenu.cs" />
     <Compile Include="Assets\Scripts\Controller\Battle States\BaseAbilityMenuState.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ApplyChanceStatusAbilityEffect.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\ChangeFacingAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Tile Effects\Fire.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Conditions\StatComparisonCondition.cs" />
@@ -451,10 +381,7 @@
     <Compile Include="Assets\Scripts\View Model Component\Actor\Equipment.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Item\Equippable.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Logical Lines\ILogicalLine.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\CreatePersistentPortalAbilityEffect.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\CanvasGroupController.cs" />
     <Compile Include="Assets\Scripts\Enums\Drivers.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\ScreenshotMaster.cs" />
@@ -467,15 +394,10 @@
     <Compile Include="Assets\Scripts\VN Integration\Core\Logical Lines\Types\LL_Operator.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\AccelStatusEffect.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\SummonUnitAbilityEffect.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\Testing\AbilityTestAutoSkipTurn.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\CommandDatabase.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\TileEffectDuration.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Ability\Analyze\AnalyzeLearner.cs" />
-=======
-    <Compile Include="Assets\Scripts\VN Integration\Core\Commands\Database\CommandDatabase.cs" />
-    <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\TileEffectDuration.cs" />
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effects\GrantExtraTurnAbilityEffect.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\UserControls\PlayerInputManager.cs" />
     <Compile Include="Assets\Scripts\VN Integration\Core\Logical Lines\Types\LL_Choice.cs" />
@@ -495,10 +417,7 @@
     <Compile Include="Assets\Scripts\View Model Component\Ability\Effect Target\EmptyTileAbilityEffectTarget.cs" />
     <Compile Include="Assets\Scripts\View Model Component\AbilityMenuEntry.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Status\Conditions\StatusCondition.cs" />
-<<<<<<< Updated upstream
     <Compile Include="Assets\Scripts\View Model Component\Status\Effects\ParalysisStatusEffect.cs" />
-=======
->>>>>>> Stashed changes
     <Compile Include="Assets\Scripts\VN Integration\Core\Characters\CharacterConfigData.cs" />
     <Compile Include="Assets\Scripts\View Model Component\Movement\FlyMovement.cs" />
     <Compile Include="Assets\Scripts\Model\Turn.cs" />
@@ -507,12 +426,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Conversations\OutroSceneLose.txt" />
-<<<<<<< Updated upstream
-    <None Include="Assets\Resources\Conversations\Example for branches and choices.txt" />
-    <None Include="Assets\Resources\Conversations\IntroScene.txt" />
-    <None Include="Assets\Audio\Music\Copyright.txt" />
-    <None Include="Assets\Resources\Conversations\OutroSceneWin.txt" />
-=======
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -538,7 +451,6 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

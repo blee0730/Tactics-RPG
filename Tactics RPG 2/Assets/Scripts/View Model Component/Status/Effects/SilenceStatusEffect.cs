@@ -20,18 +20,13 @@ public class SilenceStatusEffect : StatusEffect
 	{
 		Ability ability = sender as Ability;
 		BaseException exc = args as BaseException;
-<<<<<<< Updated upstream
 		if (ability == null || exc == null || owner == null || exc.toggle == false)
-=======
-		if (ability == null || exc == null || owner == null)
->>>>>>> Stashed changes
 			return;
 
 		Unit user = ability.GetComponentInParent<Unit>();
 		if (user != owner)
 			return;
 
-<<<<<<< Updated upstream
 		if (IsBlockedBySilence(ability))
 			exc.FlipToggle();
 	}
@@ -53,10 +48,4 @@ public class SilenceStatusEffect : StatusEffect
 		// magic prefab by hand.
 		return ability.GetComponentInChildren<MagicalAbilityPower>(true) != null;
 	}
-=======
-		AbilityMetadata metadata = ability.GetComponent<AbilityMetadata>();
-		if (metadata != null && metadata.blockedBySilence && exc.defaultToggle == true)
-			exc.FlipToggle();
-	}
->>>>>>> Stashed changes
 }

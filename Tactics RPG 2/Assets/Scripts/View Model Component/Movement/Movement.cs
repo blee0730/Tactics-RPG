@@ -67,11 +67,6 @@ public abstract class Movement : MonoBehaviour
 				tiles.RemoveAt(i);
 	}
 
-	protected virtual bool CanPassThrough (Tile tile)
-	{
-		return tile == null || tile.content == null;
-	}
-
 	protected virtual IEnumerator Turn (Directions dir)
 	{
 		TransformLocalEulerTweener t = (TransformLocalEulerTweener)transform.RotateToLocal(dir.ToEuler(), 0.25f, EasingEquations.EaseInOutQuad);

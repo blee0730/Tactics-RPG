@@ -14,10 +14,7 @@ using System.Collections.Generic;
 /// </summary>
 public class AbilityCatalog : MonoBehaviour 
 {
-<<<<<<< Updated upstream
 	public const string ChangedNotification = "AbilityCatalog.ChangedNotification";
-=======
->>>>>>> Stashed changes
 	#region Types
 	public enum JobTier
 	{
@@ -479,7 +476,6 @@ public class AbilityCatalog : MonoBehaviour
 		}
 		return null;
 	}
-<<<<<<< Updated upstream
 
 
 	public string GetAbilityCategoryName (Ability ability)
@@ -586,8 +582,6 @@ public class AbilityCatalog : MonoBehaviour
 		return ability;
 	}
 
-=======
->>>>>>> Stashed changes
 	#endregion
 
 	#region Public - Unlocks and Loadout
@@ -646,60 +640,41 @@ public class AbilityCatalog : MonoBehaviour
 
 	public void UnlockAbility (string abilityEntry)
 	{
-<<<<<<< Updated upstream
 		int before = unlockedEntries != null ? unlockedEntries.Count : 0;
 		AddUniqueEntry(unlockedEntries, abilityEntry);
 		if (unlockedEntries != null && unlockedEntries.Count != before)
 			NotifyChanged(null);
-=======
-		AddUniqueEntry(unlockedEntries, abilityEntry);
->>>>>>> Stashed changes
 	}
 
 	public void LockAbility (string abilityEntry)
 	{
-<<<<<<< Updated upstream
 		int before = unlockedEntries != null ? unlockedEntries.Count : 0;
 		RemoveEntry(unlockedEntries, abilityEntry);
 		if (unlockedEntries != null && unlockedEntries.Count != before)
 			NotifyChanged(null);
-=======
-		RemoveEntry(unlockedEntries, abilityEntry);
->>>>>>> Stashed changes
 	}
 
 	public void EquipAbility (string abilityEntry)
 	{
-<<<<<<< Updated upstream
 		int before = equippedEntries != null ? equippedEntries.Count : 0;
 		AddUniqueEntry(equippedEntries, abilityEntry);
 		if (equippedEntries != null && equippedEntries.Count != before)
 			NotifyChanged(null);
-=======
-		AddUniqueEntry(equippedEntries, abilityEntry);
->>>>>>> Stashed changes
 	}
 
 	public void UnequipAbility (string abilityEntry)
 	{
-<<<<<<< Updated upstream
 		int before = equippedEntries != null ? equippedEntries.Count : 0;
 		RemoveEntry(equippedEntries, abilityEntry);
 		if (equippedEntries != null && equippedEntries.Count != before)
 			NotifyChanged(null);
-=======
-		RemoveEntry(equippedEntries, abilityEntry);
->>>>>>> Stashed changes
 	}
 
 	public void SetLoadout (string[] abilityEntries)
 	{
 		equippedEntries.Clear();
 		AddEntries(equippedEntries, abilityEntries);
-<<<<<<< Updated upstream
 		NotifyChanged(null);
-=======
->>>>>>> Stashed changes
 	}
 	#endregion
 
@@ -821,7 +796,6 @@ public class AbilityCatalog : MonoBehaviour
 		return record;
 	}
 
-<<<<<<< Updated upstream
 
 
 	Transform FindOrCreateCategory (string categoryName)
@@ -858,8 +832,6 @@ public class AbilityCatalog : MonoBehaviour
 		return cleanCategory + "/" + cleanEntry;
 	}
 
-=======
->>>>>>> Stashed changes
 	static void AddEntries (List<string> list, string[] entries)
 	{
 		if (list == null || entries == null)
@@ -933,8 +905,4 @@ public class AbilityCatalog : MonoBehaviour
 		return result.Trim();
 	}
 	#endregion
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

@@ -85,12 +85,6 @@ public abstract class HitRate : MonoBehaviour
 
 	protected virtual int Final(Unit attacker, Unit target, int hit, int proficiency, int evade)
 	{
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		return 100 - evade;
-=======
-=======
->>>>>>> Stashed changes
 		if (attacker == null || target == null)
 			return 0;
 
@@ -113,10 +107,6 @@ public abstract class HitRate : MonoBehaviour
 		default:
 			return 1f / 2f;
 		}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	}
 	#endregion
 }

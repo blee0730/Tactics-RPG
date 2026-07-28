@@ -9,16 +9,6 @@ public class FullTypeHitRate : HitRate
 	{
 		if (target == null || target.content == null)
 			return 0;
-<<<<<<< Updated upstream
-
-		Unit defender = target.content.GetComponent<Unit>();
-		if (defender == null)
-			return 0;
-
-		if (AutomaticMiss(defender))
-			return Final(100);
-=======
->>>>>>> Stashed changes
 
 		Unit defender = target.content.GetComponent<Unit>();
 		if (defender == null)

@@ -5,21 +5,10 @@ public class Unit : MonoBehaviour
 {
 	public Tile tile { get; protected set; }
 	public Directions dir;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-	public void Place (Tile target)
-=======
-=======
->>>>>>> Stashed changes
 	public bool cantMove = false;
 	public bool cantAct = false;
 	public int timer = 0;
 	public void Place(Tile target)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 	{
 		// Make sure old tile location is not still pointing to this unit
 		if (tile != null && tile.content == gameObject)

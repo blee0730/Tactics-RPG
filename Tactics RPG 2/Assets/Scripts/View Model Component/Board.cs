@@ -12,25 +12,16 @@ public class Board : MonoBehaviour
 	[SerializeField] GameObject woodPrefab;
 	[SerializeField] GameObject waterPrefab;
 	[SerializeField] GameObject skyPrefab;
-<<<<<<< Updated upstream
 	[SerializeField] GameObject icePrefab;
 
 	// Compatibility dictionary: the normal/default surface at each X/Z board point.
 	// Old systems that expect one tile per Point should still use this.
-=======
-
-	// Compatibility dictionary: the normal/default surface at each X/Z board point.
->>>>>>> Stashed changes
 	public Dictionary<Point, Tile> topTiles = new Dictionary<Point, Tile>();
 
 	// Non-selectable visual/support blocks.
 	public Dictionary<Vector3, Tile> fillerTiles = new Dictionary<Vector3, Tile>();
 
-<<<<<<< Updated upstream
 	// Compatibility dictionary: one representative splitTop per X/Z board point.
-=======
-	// Compatibility dictionary: one representative split top per X/Z board point.
->>>>>>> Stashed changes
 	// Use selectableTiles for the real multi-layer stack, because more than one
 	// splitTop can exist at the same X/Z position.
 	public Dictionary<Point, Tile> splitTops = new Dictionary<Point, Tile>();
@@ -58,14 +49,7 @@ public class Board : MonoBehaviour
 	#region Public
 	public void Load (LevelData data)
 	{
-<<<<<<< Updated upstream
 		ClearTileIndexes();
-=======
-		topTiles.Clear();
-		fillerTiles.Clear();
-		splitTops.Clear();
-		selectableTiles.Clear();
->>>>>>> Stashed changes
 
 		_min = new Point(int.MaxValue, int.MaxValue);
 		_max = new Point(int.MinValue, int.MinValue);
@@ -83,16 +67,7 @@ public class Board : MonoBehaviour
 			t.topTile = isTopTile;
 			t.splitTop = isSplitTop;
 
-<<<<<<< Updated upstream
 			RegisterTile(t);
-=======
-			if (t.topTile)
-				AddTopTile(t);
-			else if (t.splitTop)
-				AddSplitTopTile(t);
-			else
-				fillerTiles[t.transform.localPosition] = t;
->>>>>>> Stashed changes
 			
 			_min.x = Mathf.Min(_min.x, t.pos.x);
 			_min.y = Mathf.Min(_min.y, t.pos.y);
@@ -116,11 +91,7 @@ public class Board : MonoBehaviour
 	public List<Tile> GetSelectableTiles (Point p)
 	{
 		if (selectableTiles.ContainsKey(p))
-<<<<<<< Updated upstream
 			return new List<Tile>(selectableTiles[p]);
-=======
-			return selectableTiles[p];
->>>>>>> Stashed changes
 		return new List<Tile>();
 	}
 
@@ -172,7 +143,6 @@ public class Board : MonoBehaviour
 			layerIndex += stack.Count;
 		layerIndex %= stack.Count;
 		return stack[layerIndex];
-<<<<<<< Updated upstream
 	}
 
 	public Tile ReplaceTopTile(Point p, Tile.TileType tileType, float height, bool transferContent)
@@ -230,8 +200,6 @@ public class Board : MonoBehaviour
 			if (unit != null)
 				unit.Match();
 		}
-=======
->>>>>>> Stashed changes
 	}
 
 	public List<Tile> Search (Tile start, Func<Tile, Tile, bool> addTile)
@@ -266,23 +234,7 @@ public class Board : MonoBehaviour
 			{
 				List<Tile> nextTiles = GetSelectableTiles(t.pos + dirs[i]);
 				for (int j = 0; j < nextTiles.Count; ++j)
-<<<<<<< Updated upstream
 					TryAddSearchTile(t, nextTiles[j], addTile, checkNext, retValue);
-=======
-				{
-					Tile next = nextTiles[j];
-					if (next == null || next.distance <= t.distance + 1)
-						continue;
-
-					if (addTile(t, next))
-					{
-						next.distance = t.distance + 1;
-						next.prev = t;
-						checkNext.Enqueue(next);
-						retValue.Add(next);
-					}
-				}
->>>>>>> Stashed changes
 			}
 
 			if (checkNow.Count == 0)
@@ -387,7 +339,6 @@ public class Board : MonoBehaviour
 	#endregion
 
 	#region Private
-<<<<<<< Updated upstream
 	void ClearTileIndexes ()
 	{
 		topTiles.Clear();
@@ -420,8 +371,6 @@ public class Board : MonoBehaviour
 			fillerTiles[tile.transform.localPosition] = tile;
 	}
 
-=======
->>>>>>> Stashed changes
 	void AddTopTile (Tile tile)
 	{
 		if (!topTiles.ContainsKey(tile.pos) || topTiles[tile.pos].height < tile.height)
@@ -448,7 +397,6 @@ public class Board : MonoBehaviour
 		stack.Sort((a, b) => a.height.CompareTo(b.height));
 	}
 
-<<<<<<< Updated upstream
 	void TryAddSearchTile (Tile from, Tile next, Func<Tile, Tile, bool> addTile, Queue<Tile> checkNext, List<Tile> retValue)
 	{
 		if (next == null || next == from)
@@ -540,8 +488,6 @@ public class Board : MonoBehaviour
 		return false;
 	}
 
-=======
->>>>>>> Stashed changes
 	void ClearSearch ()
 	{
 		foreach (List<Tile> stack in selectableTiles.Values)
@@ -550,11 +496,8 @@ public class Board : MonoBehaviour
 			{
 				stack[i].prev = null;
 				stack[i].distance = int.MaxValue;
-<<<<<<< Updated upstream
 				stack[i].layerChanges = int.MaxValue;
 				stack[i].lastLayerChangeStep = int.MaxValue;
-=======
->>>>>>> Stashed changes
 			}
 		}
 	}

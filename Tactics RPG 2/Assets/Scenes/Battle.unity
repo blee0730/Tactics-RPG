@@ -170,11 +170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   follow: {fileID: 697354563}
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
   pitch: {fileID: 674843573}
   sensitivity: 1000
 --- !u!1 &111496761
@@ -222,10 +217,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111496761}
   m_CullTransparentMesh: 1
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 --- !u!1001 &275820491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -478,7 +469,6 @@ MonoBehaviour:
   woodPrefab: {fileID: 169248, guid: c7280ff2b9400734dad384c0aef0c490, type: 3}
   waterPrefab: {fileID: 169248, guid: 7ac95e79302094548bca62eee6bb954a, type: 3}
   skyPrefab: {fileID: 169248, guid: 29cc51f2da4cac94886a1e95e1bc9ee8, type: 3}
-<<<<<<< Updated upstream
   icePrefab: {fileID: 0}
 --- !u!1 &476054498
 GameObject:
@@ -582,8 +572,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 476054498}
   m_CullTransparentMesh: 1
-=======
->>>>>>> Stashed changes
 --- !u!1 &674843572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,10 +1631,7 @@ Transform:
   - {fileID: 292808606}
   - {fileID: 275820492}
   - {fileID: 1399851166}
-<<<<<<< Updated upstream
   - {fileID: 2076965548}
-=======
->>>>>>> Stashed changes
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1725097816

@@ -11,7 +11,6 @@ public class WalkMovement : Movement
 		if (Mathf.Abs(from.height - to.height) > jumpHeight)
 			return false;
 
-<<<<<<< Updated upstream
 		// Multilayer rule:
 		// Do not let a unit switch between stacked surfaces in the exact same X/Z
 		// column. That looked like the character falling through the bridge/floor.
@@ -30,24 +29,12 @@ public class WalkMovement : Movement
 		// Same-alliance units may be passed through, but occupied tiles are still
 		// removed from the final destination list by Movement.Filter.
 		if (!CanPassThrough(to))
-=======
-		// Same-alliance units can be passed through, but foes still block normal movement.
-		if (to.content != null && !CanPassThrough(to))
->>>>>>> Stashed changes
 			return false;
 
 		if (from.GetComponentInChildren<Ice>())
 			from.distance += 1;
 
 		return base.ExpandSearch(from, to);
-	}
-
-	protected override void Filter (List<Tile> tiles)
-	{
-		// Passing through allies is allowed, but ending movement on any occupied tile is not.
-		for (int i = tiles.Count - 1; i >= 0; --i)
-			if (tiles[i].content != null)
-				tiles.RemoveAt(i);
 	}
 	
 	protected override bool CanPassThrough(Tile tile)
@@ -99,16 +86,6 @@ public class WalkMovement : Movement
 		yield return null;
 	}
 	#endregion
-
-	protected override bool CanPassThrough (Tile tile)
-	{
-		if (tile == null || tile.content == null)
-			return true;
-
-		Alliance mine = unit.GetComponentInChildren<Alliance>();
-		Alliance other = tile.content.GetComponentInChildren<Alliance>();
-		return mine != null && other != null && mine.IsMatch(other, Targets.Ally);
-	}
 
 	#region Private
 	IEnumerator Walk (Tile target)

@@ -13,12 +13,6 @@ public class ConfirmAbilityTargetState : BattleState
 	{
 		base.Enter ();
 		aa = turn.ability.GetComponent<AbilityArea>();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		tiles = aa.GetTilesInArea(board, pos);
-=======
-=======
->>>>>>> Stashed changes
 		attacker = aa != null ? aa.GetComponentInParent<Unit>() : null;
 		if (aa == null)
 		{
@@ -34,10 +28,6 @@ public class ConfirmAbilityTargetState : BattleState
 		if (tiles == null)
 			tiles = new List<Tile>();
 		tiles.RemoveAll(t => t == null);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 		board.SelectTiles(tiles);
 		FindTargets();
 		statPanelController.ShowPrimary(turn.actor.gameObject);
@@ -51,11 +41,8 @@ public class ConfirmAbilityTargetState : BattleState
 		{
 			statPanelController.HideSecondary();
 			hitSuccessIndicator.Hide();
-<<<<<<< Updated upstream
 			if (driver.Current == Drivers.Human)
 				StartCoroutine(RejectInvalidTargetSelection());
-=======
->>>>>>> Stashed changes
 		}
 		if (driver.Current == Drivers.Computer)
 			StartCoroutine(ComputerDisplayAbilitySelection());
@@ -129,16 +116,6 @@ public class ConfirmAbilityTargetState : BattleState
 		if (index >= turn.targets.Count)
 			index = 0;
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		if (turn.targets.Count > 0)
-		{
-			RefreshSecondaryStatPanel(turn.targets[index].pos);
-			UpdateHitSuccessIndicator ();
-		}
-	}
-
-=======
 		Tile selected = turn.targets[index];
 		Unit selectedUnit = selected != null && selected.content != null ? selected.content.GetComponent<Unit>() : null;
 		if (selectedUnit != null && selectedUnit != turn.actor)
@@ -149,19 +126,6 @@ public class ConfirmAbilityTargetState : BattleState
 		UpdateHitSuccessIndicator();
 	}
 	
->>>>>>> Stashed changes
-=======
-		Tile selected = turn.targets[index];
-		Unit selectedUnit = selected != null && selected.content != null ? selected.content.GetComponent<Unit>() : null;
-		if (selectedUnit != null && selectedUnit != turn.actor)
-			RefreshSecondaryStatPanel(selected.pos);
-		else
-			statPanelController.HideSecondary();
-
-		UpdateHitSuccessIndicator();
-	}
-	
->>>>>>> Stashed changes
 	void UpdateHitSuccessIndicator ()
 	{
 		if (turn.targets == null || turn.targets.Count == 0 || index < 0 || index >= turn.targets.Count)
